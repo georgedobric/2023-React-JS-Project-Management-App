@@ -1,25 +1,32 @@
 import logo from './logo.svg';
 import './App.css';
-
+import './components/Node.js'
+import React, { useState } from 'react';
+import Node from './components/Node';
+//import Test from './components/Test';
 function App() {
+
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <Node />
     </div>
   );
 }
 
+//ReactDOM.render(<App />, document.getElementById('root'));
 export default App;
+
+
+/* // reactdom is no longer supported, switch to create root instead
+import { createRoot } from 'react-dom';
+
+// ...
+
+// Create a root using createRoot
+const rootElement = document.getElementById('root');
+const root = createRoot(rootElement);
+
+// Render your React component
+root.render(<App />);
+*/
