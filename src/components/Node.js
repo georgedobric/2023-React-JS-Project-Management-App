@@ -1,17 +1,23 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import './Node.css'
 
 function Node() {
     /* Turn the Node into a button which, when clicked, prompts the user to
     input some text which will be logged to the console. */
+    
+    //let selectedNode = 0;
+    const [selectedNode, setSelectedNode] = useState(0);
+    
     const handleClick = () => {
         const userInput = prompt('Enter Text');
         //Do something with the user input
         console.log('User entered: ', userInput);
     };
     
+    const boxRef = useRef(null); //Coordinates
+
     /* Create an array of node objects, expandable upon user input. */
-    const [jobNodes, setJobNodes] = useState([{ id: 0, subject: 'Root' }]);
+    const [jobNodes, setJobNodesgit ] = useState([{ id: 0, subject: 'Root' }]);
 
     /* Handles the 'add node' button, which expands the array. */
     const handleAddObject = () => {
@@ -35,6 +41,20 @@ function Node() {
     
     useEffect(() => {
         console.log(jobNodes); // Log the updated state on each re-render
+
+        //Coordinates begins
+        const getBoxCoordinates = () => {
+            const boxElement = boxRef.current;
+            if (boxElement) {
+              const { top, left } = boxElement.getBoundingClientRect();
+              console.log('Box coordinates:', { top, left });
+              // Use the coordinates for further processing
+            }
+          };
+      
+          getBoxCoordinates();
+        //Coordinates ends
+
       }, [jobNodes]);
 ;
     return (
@@ -44,14 +64,27 @@ function Node() {
       <br></br>
       <br></br>
       {jobNodes.map(obj => (
-        <div className='box text' key={obj.id} style={{ marginBottom: '10px' }}>{obj.subject}</div>
+        <div className='box text' onClick={() => setSelectedNode(obj.id)} key={obj.id} ref={boxRef}>{obj.subject}</div>
       ))}
+      <div className='info'>
+        <div className='textHeader'>Node Info</div>
+        <div className='text'>
+            <div className='textSubHeader'>Subject:</div>
+            <br />
+            {jobNodes[selectedNode].subject}
+            <br />
+            <div className='textSubHeader'>Stage:</div>
+            <br />
+            {jobNodes[selectedNode].stage}
+            </div>
+      </div>
         </div>
     );
 };
 
 
 export default Node;
+//style={{ marginBottom: '10px' }}
 /*
 <svg className="line">
         <line x1="50" y1="50" x2="350" y2="50" />

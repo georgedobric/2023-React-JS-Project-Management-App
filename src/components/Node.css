@@ -3,7 +3,21 @@
     padding: 10px;
     border-radius: 5px;
     width: 10vw; /* Set the width to 1/20th of the viewport width */
+    margin-bottom: 10px;
+    margin-left: 10px;
 
+    position: relative;
+}
+
+.box::after {
+    content: "";
+    position: absolute;
+    top: 100%; /* Position the line below the box */
+    left: 50%;
+    transform: translateX(-50%);
+    width: 2px;
+    height: 20px;
+    background-color: black; /* Draw the branch line which connects adjacent nodes */
   }
 
 .boxStage1 {
@@ -46,6 +60,20 @@
   .text {
     color: white;
   }
+
+  .textHeader {
+    color: white;
+    font-size: 2em;
+    font-weight: bold;
+    text-align: center;
+  }
+
+  .textSubHeader {
+    color: white;
+    font-size: 1.25em;
+    font-weight: bold;
+    text-align: left;
+  }
   
   .line {
     position: absolute;
@@ -54,4 +82,17 @@
     width: 200px;
     height: 1px;
     background-color: black;
+  }
+
+  .info {
+    background-color: lightcoral;
+    padding: 10px;
+    border-radius: 5px;
+    width: 50vw; /* Set the width to 1/20th of the viewport width */
+    height: 50vw;
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+    margin-bottom: 10px;
+    margin-left: 10px;
   }
