@@ -17,7 +17,7 @@ function Node() {
     const boxRef = useRef(null); //Coordinates
 
     /* Create an array of node objects, expandable upon user input. */
-    const [jobNodes, setJobNodesgit ] = useState([{ id: 0, subject: 'Root' }]);
+    const [jobNodes, setJobNodes ] = useState([{ id: 0, subject: 'Root' }]);
 
     /* Handles the 'add node' button, which expands the array. */
     const handleAddObject = () => {
