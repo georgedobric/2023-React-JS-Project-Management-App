@@ -1,15 +1,36 @@
 import logo from './logo.svg';
 import './App.css';
 import './components/Node.js'
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Node from './components/Node';
+import Job from './components/Job';
 //import Test from './components/Test';
-function App() {
+function App( { selectedJob }) {
 
+  //Create an array of job objects, expandable upon user input.
+  const [job, setJob] = useState([{id:0, title:'root'}]);
+
+  ////////////////////////////////
+  const [dataFromChild, setDataFromChild] = useState('');
+
+  const handleDataFromChild = (data) => {
+    setDataFromChild(data);
+  };
+  ////////////////////////////////
+
+  useEffect(() => {
+    console.log(job); // Log the updated state on each re-render
+  }, [job]);
 
   return (
-    <div>
-      <Node />
+    <div className='contianer'>
+      <Job job={job} setJob={setJob} sendDataToParent={handleDataFromChild}/>
+      <div>
+      <Node job={job} />
+      </div>
+      <div style={{ textAlign: 'center' }}>
+      <p>Data from Child: {dataFromChild}</p>
+      </div>
     </div>
   );
 }

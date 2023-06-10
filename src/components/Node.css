@@ -1,3 +1,22 @@
+.nodeWindow {
+  position:absolute;
+  height: 45vh;
+  width: 45vw;
+  top: 50%;
+  left: 5px;
+  border-radius: 5px;
+  border-color: aquamarine;
+  background-color: transparent;
+  pointer-events: none;
+  border-width: 5px;
+  border-style: solid;
+  overflow: auto;
+  overflow-wrap:normal;
+  display: flex;
+  flex-direction: column;
+  flex-wrap:nowrap;
+}
+
 .box {
     background-color: lightcoral;
     padding: 10px;
@@ -5,13 +24,18 @@
     width: 10vw; /* Set the width to 1/20th of the viewport width */
     margin-bottom: 10px;
     margin-left: 10px;
+    top: 49vh;
+    display: flex;
+    flex-wrap: wrap;
+    flex: 1;
+    z-index: 0;
 
-    position: relative;
+    position: static;
 }
 
 .box::after {
     content: "";
-    position: absolute;
+    position: static;
     top: 100%; /* Position the line below the box */
     left: 50%;
     transform: translateX(-50%);
@@ -56,6 +80,18 @@
     background-color: rgb(128, 232, 240);
     padding: 10px;
     border-radius: 5px;
+    top: 49vh;
+    left: 33vw;
+    position: fixed;
+  }
+
+  .addJobBox {
+    background-color: rgb(132, 240, 128);
+    padding: 10px;
+    border-radius: 5px;
+    top: 2vh;
+    left: 1vw;
+    position: fixed;
   }
   .text {
     color: white;

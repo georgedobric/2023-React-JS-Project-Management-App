@@ -1,0 +1,33 @@
+.container{
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+  
+.addJobBox {
+    background-color: rgb(132, 240, 128);
+    padding: 10px;
+    border-radius: 5px;
+    top: 2vh;
+    left: 1vw;
+    position: fixed;
+  }
+
+  .job {
+    background-color: rgb(240, 173, 128);
+    padding: 10px;
+    border-radius: 5px;
+    width: 10vw; /* Set the width to 1/20th of the viewport width */
+    margin-bottom: 10px;
+    margin-left: 10px;
+    top: 8vh;
+    display: flex;
+    flex-wrap: wrap;
+    flex: 2;
+
+    position: relative;
+}
+
+.text {
+    color: white;
+  }
