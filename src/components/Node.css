@@ -1,4 +1,25 @@
-.nodeWindow {
+.z1 {
+  z-index: 1;
+}
+
+.z0 {
+  z-index: 0;
+}
+
+.nodeContainer {
+  position: absolute;
+  height: 45vh;
+  width: 45vw;
+  top: 51%;
+  left: 5px;
+  overflow: auto;
+  overflow-wrap:normal;
+  display: flex;
+  flex-direction: column;
+  flex-wrap:nowrap;
+}
+
+.nodeWindowBorder {
   position:absolute;
   height: 45vh;
   width: 45vw;
@@ -6,7 +27,7 @@
   left: 5px;
   border-radius: 5px;
   border-color: aquamarine;
-  background-color: transparent;
+  background-color: rgba(255, 0, 0, 0.5); /* Red color with 50% transparency */
   pointer-events: none;
   border-width: 5px;
   border-style: solid;
@@ -15,10 +36,34 @@
   display: flex;
   flex-direction: column;
   flex-wrap:nowrap;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.nodeWindow {
+  position:absolute;
+  height: 45vh;
+  width: 45vw;
+  top: 50%;
+  left: 5px;
+  border-radius: 5px;
+  border-color: aquamarine;
+  background-color: blue;
+  pointer-events: none;
+  border-width: 5px;
+  border-style: solid;
+  overflow: auto;
+  overflow-wrap:normal;
+  display: flex;
+  flex-direction: column;
+  flex-wrap:nowrap;
+  pointer-events: none;
+  z-index: 0;
 }
 
 .box {
-    background-color: lightcoral;
+  position:absolute;  
+  background-color: lightcoral;
     padding: 10px;
     border-radius: 5px;
     width: 10vw; /* Set the width to 1/20th of the viewport width */
@@ -28,7 +73,7 @@
     display: flex;
     flex-wrap: wrap;
     flex: 1;
-    z-index: 0;
+    z-index: 1;
 
     position: static;
 }
@@ -80,7 +125,7 @@
     background-color: rgb(128, 232, 240);
     padding: 10px;
     border-radius: 5px;
-    top: 49vh;
+    top: 51%;
     left: 33vw;
     position: fixed;
   }

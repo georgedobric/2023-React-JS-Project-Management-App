@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import "./Node.css";
+import { getMouseEventOptions } from "@testing-library/user-event/dist/utils";
 
 function Node( { job }) {
   /* Turn the Node into a button which, when clicked, prompts the user to
@@ -57,12 +58,15 @@ function Node( { job }) {
   useEffect(() => {
     ////console.log(jobNodes); // Log the updated state on each re-render
   }, [jobNodes]);
+
+  //temporarily removed:
+  //<div className="nodeWindowBorder"></div>
+ // <div className="nodeWindow" onClick={getMouseEventOptions}>
+
   return (
     <div>
-      <button className="addNodeBox" onClick={handleAddObject}>
-        Add Node
-      </button>
-      <div className="nodeWindow">
+      <div className="nodeWindowBorder"></div>
+      <div className="nodeContainer" onClick={getMouseEventOptions}>
         {jobNodes.map((obj) => (
             <div
             className="box text"
@@ -85,6 +89,11 @@ function Node( { job }) {
           {jobNodes[selectedNode].stage}
         </div>
       </div>
+
+      <button className="addNodeBox" onClick={handleAddObject}>
+        Add Node
+      </button>
+
     </div>
   );
 }

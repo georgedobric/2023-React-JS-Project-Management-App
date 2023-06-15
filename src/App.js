@@ -22,6 +22,18 @@ function App( { selectedJob }) {
     console.log(job); // Log the updated state on each re-render
   }, [job]);
 
+  /*const asdf = document.getElementById('viewing');
+
+  asdf.addEventListener('mouseenter', () => {
+    asdf.classList.add('hovered');
+  });
+  
+  asdf.addEventListener('mouseleave', () => {
+    asdf.classList.remove('hovered');
+  });*/
+
+  //id='viewing' should be added to the <p>  selected job div if that is the intention
+
   return (
     <div className='contianer'>
       <Job job={job} setJob={setJob} sendDataToParent={handleDataFromChild}/>
@@ -29,7 +41,7 @@ function App( { selectedJob }) {
       <Node job={job} />
       </div>
       <div style={{ textAlign: 'center' }}>
-      <p>Data from Child: {dataFromChild}</p>
+      <p className='selectedJob'>Selected Job: {dataFromChild}</p>
       </div>
     </div>
   );
