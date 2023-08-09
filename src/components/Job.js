@@ -20,12 +20,10 @@ function Job({ job, setJob, sendDataToParent }) {
     //Create an array of job objects, expandable upon user input.
     ////const [job, setJob] = useState([{id:0, title:'root'}]);
 
-
-    //////////////////////////////////
+    //Handle user-selected job click and send the selected job number to App.js
     const handleClick = (id) => {
         sendDataToParent(id);
       };
-    //////////////////////////////////
 
     //Track the user-selected job
     const [selectedJobNum, setSelectedJobNum] = useState(0);
@@ -59,7 +57,7 @@ function Job({ job, setJob, sendDataToParent }) {
         ////console.log(job); // Log the updated state on each re-render
         //console.log("the selected job is", selectedJobNum);
         setSelectedJobNum(selectedJobNum);
-        job.current = selectedJobNum;
+        ////edit 06.28.23 job.current = selectedJobNum;
         
       }, [job]);
 
@@ -71,8 +69,7 @@ function Job({ job, setJob, sendDataToParent }) {
             <div
                 className='job text'
                 key={obj.id}
-                //onClick={() => setSelectedJobNum(obj.id)}
-                //onClick={handleClick(obj.id)}
+                //Set the user-selected job number and send this data to App.js
                 onClick={() => {
                     setSelectedJobNum(obj.id);
                     handleClick(obj.id);

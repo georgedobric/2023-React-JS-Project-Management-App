@@ -8,9 +8,17 @@ import Job from './components/Job';
 function App( { selectedJob }) {
 
   //Create an array of job objects, expandable upon user input.
-  const [job, setJob] = useState([{id:0, title:'root'}]);
+   ///const [job, setJob] = useState([{id:0, title:'root', tree:[ { id: 0, subject: "Root" } ]}] );
+   const [job, setJob] = useState([
+    { id: 0, title:'first', tree: [{ id: 31, subject: 'code' }, { id: 32, subject: 'morecode' }] },
+    { id: 1, title:'root', tree: [{ id: 11, subject: 'Math' }, { id: 12, subject: 'Science' }] },
+    { id: 2, title:'two', tree: [{ id: 21, subject: 'History' }, { id: 22, subject: 'Geography' }] }
+  ]);
+  //const [job, setJob] = useState([{id:0}]);
 
+  job.current = 0;
   ////////////////////////////////
+  //Create and handle the selected job number from the job component
   const [dataFromChild, setDataFromChild] = useState('');
 
   const handleDataFromChild = (data) => {
@@ -20,6 +28,7 @@ function App( { selectedJob }) {
 
   useEffect(() => {
     console.log(job); // Log the updated state on each re-render
+    job.current = dataFromChild; //edit 06.28.23
   }, [job]);
 
   /*const asdf = document.getElementById('viewing');
@@ -38,7 +47,7 @@ function App( { selectedJob }) {
     <div className='contianer'>
       <Job job={job} setJob={setJob} sendDataToParent={handleDataFromChild}/>
       <div>
-      <Node job={job} />
+      <Node job={job} currentJob={dataFromChild || 0}/>
       </div>
       <div style={{ textAlign: 'center' }}>
       <p className='selectedJob'>Selected Job: {dataFromChild}</p>
