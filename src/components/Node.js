@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import "./Node.css";
 import { getMouseEventOptions } from "@testing-library/user-event/dist/utils";
 
-function Node( { job, currentJob }) {
+function Node( { job, currentJob, sendNodeDataToParent }) {
   /* Turn the Node into a button which, when clicked, prompts the user to
     input some text which will be logged to the console. */
 
@@ -10,7 +10,7 @@ function Node( { job, currentJob }) {
   const [selectedNode, setSelectedNode] = useState(0);
   const SwitchJob = (id) => {
     setSelectedNode(id);
-    setJobNodes(job[id].tree);
+    //setJobNodes(job[id].tree); //TEMPORARILY COMMENTED OUT
 
   }
 
@@ -127,12 +127,38 @@ function Node( { job, currentJob }) {
   //   //console.log(currentJob);
   // }, [jobNodes]);
 
+
+
+
+// Initialize the jobNodes array, and keep the jobNodes array updated
+// TEMPORARILY commenting out this switchjob useeffect since its being called several times 
   useEffect(() => {
-    setJobNodes (job[currentJob].tree, addedObject);
+    if (jobNodes.length <= job[currentJob].tree.length){
+      setJobNodes (job[currentJob].tree, addedObject);
+    }
+    sendNodeDataToParent(jobNodes)
   }, [SwitchJob]);
+
+
+
+
   //temporarily removed:
   //<div className="nodeWindowBorder"></div>
  // <div className="nodeWindow" onClick={getMouseEventOptions}>
+
+//  useEffect(() => {
+//   // Find the index of the item you want to update
+//   const itemIndex = job.findIndex(job => job.id === currentJob);
+
+//   // If the item is found, update its component property
+//   if (itemIndex !== -1) {
+//     const updatedJob = [...job];
+//     updatedJob[itemIndex].tree = jobNodes;
+//     job = updatedJob;
+//     //setJob(updatedJob);
+//   }
+// }, [job]);
+
 
   return (
     <div>
