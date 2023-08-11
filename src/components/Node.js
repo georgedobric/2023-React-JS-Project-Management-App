@@ -20,11 +20,13 @@ function Node( { job, currentJob, sendNodeDataToParent }) {
   console.log("the current job is: " + currentJob);
   console.log(job[currentJob]);
   
+  
   //initialization
   //const [jobNodes, setJobNodes] = useState(job[currentJob].tree);
   const [jobNodes, setJobNodes] = useState([]);
 
-  
+  console.log("the jobnodes array is: ");
+  console.log(jobNodes);
 
   //Create an object which references the newObject assigned by the user
   let addedObject = {
@@ -36,9 +38,10 @@ function Node( { job, currentJob, sendNodeDataToParent }) {
 
 
   //updating job tree
-  useEffect(() => {
-    setJobNodes(...job[currentJob].tree, addedObject);
-  }, [job[currentJob].tree]);
+  //TEMPORARILY COMMENTED OUT
+  // useEffect(() => {
+  //   setJobNodes(...job[currentJob].tree, addedObject);
+  // }, [job[currentJob].tree]);
 
   
   //const [jobNodes, setJobNodes] = useState([{ id, subject}]);
@@ -133,7 +136,7 @@ function Node( { job, currentJob, sendNodeDataToParent }) {
 // Initialize the jobNodes array, and keep the jobNodes array updated
 // TEMPORARILY commenting out this switchjob useeffect since its being called several times 
   useEffect(() => {
-    if (jobNodes.length <= job[currentJob].tree.length){
+    if (jobNodes.length < job[currentJob].tree.length){
       setJobNodes (job[currentJob].tree, addedObject);
     }
     sendNodeDataToParent(jobNodes)
@@ -158,18 +161,35 @@ function Node( { job, currentJob, sendNodeDataToParent }) {
 //     //setJob(updatedJob);
 //   }
 // }, [job]);
+const [data, setData] = useState([]);
+
+useEffect(() => {
+  async function fetchData() {
+      try {
+          const response = await fetch('http://localhost:3000/api/data'); // Replace with your endpoint
+          const jsonData = await response.json();
+          setData(jsonData);
+      } catch (error) {
+          console.error('Error fetching data:', error);
+      }
+  }
+
+  fetchData();
+}, []); // Empty dependency array means this will run once after component mount
 
 
   return (
     <div>
       <div className="nodeWindowBorder"></div>
       <div className="nodeContainer" onClick={getMouseEventOptions}>
-        {jobNodes.map((obj) => (
+        {Array.isArray(jobNodes) && jobNodes.map((obj) => (
             <div
             className="box text"
             onClick={() => SwitchJob(obj.id)  } 
 
             key={obj.id}
+
+            
             >
             {obj.subject}
             </div>
