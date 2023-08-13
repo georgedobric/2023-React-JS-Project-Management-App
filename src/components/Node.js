@@ -14,16 +14,18 @@ function Node( { job, currentJob, sendNodeDataToParent }) {
 
   }
 
-  //Create an array of node objects, expandable upon user input.
-  ////const [jobNodes, setJobNodes] = useState([{ id: 0, subject: "Root" }]);
-  //const [jobNodes, setJobNodes] = useState([{ id: undefined, subject: undefined }]);
   console.log("the current job is: " + currentJob);
   console.log(job[currentJob]);
-  
-  
   //initialization
   //const [jobNodes, setJobNodes] = useState(job[currentJob].tree);
-  const [jobNodes, setJobNodes] = useState([]);
+
+  const nodesVal = [{id:0, subject:"Root"}]; // initialize nodes here
+const jobNumberVal = 0; // initialize jobNumber here
+
+//const [jobNodes, setJobNodes] = useState([nodes: nodesVal, jobNumber: jobNumberVal]);
+const [jobNodes, setJobNodes] = useState( { nodes: nodesVal, jobNumber: jobNumberVal } );
+
+  //const [jobNodes, setJobNodes] = useState([nodes, jobNumber]);
 
   console.log("the jobnodes array is: ");
   console.log(jobNodes);
@@ -36,53 +38,15 @@ function Node( { job, currentJob, sendNodeDataToParent }) {
     //boxID: boxType,
   };
 
-
-  //updating job tree
-  //TEMPORARILY COMMENTED OUT
-  // useEffect(() => {
-  //   setJobNodes(...job[currentJob].tree, addedObject);
-  // }, [job[currentJob].tree]);
-
-  
-  //const [jobNodes, setJobNodes] = useState([{ id, subject}]);
-
-  //Combine the node object to the associated job object
-  /*const core {
-    ...job,
-    ...jobNodes
-  }*/
-
-  //jobNodes.map((obj) => (
-
-
-
-
-
-
-
-
-
   //Handles the 'add node' button, which expands the array.
   const handleAddObject = () => {
-    ////setJobNodes(job[currentJob].tree);
-
     //Stores the new node's ID number
-    const newId = jobNodes.length;
-    
+    let newId = jobNodes.nodes.length;
     //Stores a subject for the node
     const userInputNodeSubject = prompt("Enter the node Subject: ");
-    
-    //Stores the node's job stage, used to assign the node color
-    ////const userInputNodeStage = prompt("Enter the node Stage: ");
-    
-    //Defines a default node stage/color
-    let boxType = "boxStage1";
-    
-    //Assignment of the node's job stage:
-    // if (userInputNodeStage == 2) boxType = "boxStage2";
-    // else if (userInputNodeStage == 3) boxType = "boxStage3";
-    // else if (userInputNodeStage == 4) boxType = "boxStage4";
-
+    if (newId === undefined){
+      newId = 1;
+    }
     //Create the new node object
     const newObject = {
       id: newId,
@@ -93,74 +57,38 @@ function Node( { job, currentJob, sendNodeDataToParent }) {
     addedObject = newObject;
 
     //Add the new node object to the jobNodes array
-    ////setJobNodes((prevArray) => [...prevArray, newObject]);
-    setJobNodes([...jobNodes, newObject]);
 
-    /*setJobNodes((prevArray) => {
-      console.log("Previous Array:", prevArray);
-      return [...prevArray, newObject];
-    });*/
-    
+    // setJobNodes(prevJobNodes => [
+    //   ...prevJobNodes.map(jobNodes => ({
+    //     ...jobNodes,
+    //     nodes: [...jobNodes.nodes, newObject]
+    //   }))
+    // ]);
 
+    //ok so this line is causing an error upon adding nodes to a second job
+    // error: jobnodes.nodes is not iterable
+    // attempted fix: lets try to switch this assignment using state
+    console.log("jobNodes is --------------------------------------");
+    console.log(jobNodes); // Check what jobNodes.nodes contains
+    console.log("newObject is --------------------------------------");
+    console.log(newObject);
+    if (newObject.id !== undefined){
+      jobNodes.nodes = [...jobNodes.nodes, newObject];
+    }
 
-    //Clear the jobNodes array, select an existing tree from the selected job, and update it with the new object
-    ////setJobNodes([]);
-   /// if (job[currentJob].hasOwnProperty('tree')) {
-      //jobNodes = job[currentJob].tree;
-      ///setJobNodes([job[currentJob].tree]);
-    ///} else {
-      //job[currentJob].tree = [];
-      //setJobNodes([]);
-  ///  }
-    //jobNodes = job[currentJob].tree;
- ///   setJobNodes((prevArray) => [...prevArray, newObject]);
-
-
-    //Add the new node object to the jobNodes array - assign to the currently selected job
-    ////setJobNodes((prevArray) => [...prevArray, newObject]);
-
-    //job[job.current].tree = jobNodes;
-    job[currentJob].tree = jobNodes;
-    //job[currentJob].tree.push(newObject);
-    //job[currentJob].id = 234;
+    jobNodes.jobNumber = currentJob;
+    job[currentJob].tree = jobNodes.nodes;
   };
 
-  // useEffect(() => {
-  //   ////console.log(jobNodes); // Log the updated state on each re-render
-  //   //console.log(currentJob);
-  // }, [jobNodes]);
-
-
-
-
-// Initialize the jobNodes array, and keep the jobNodes array updated
-// TEMPORARILY commenting out this switchjob useeffect since its being called several times 
-  useEffect(() => {
-    if (jobNodes.length < job[currentJob].tree.length){
-      setJobNodes (job[currentJob].tree, addedObject);
-    }
-    sendNodeDataToParent(jobNodes)
-  }, [SwitchJob]);
-
-
-
-
-  //temporarily removed:
-  //<div className="nodeWindowBorder"></div>
- // <div className="nodeWindow" onClick={getMouseEventOptions}>
-
-//  useEffect(() => {
-//   // Find the index of the item you want to update
-//   const itemIndex = job.findIndex(job => job.id === currentJob);
-
-//   // If the item is found, update its component property
-//   if (itemIndex !== -1) {
-//     const updatedJob = [...job];
-//     updatedJob[itemIndex].tree = jobNodes;
-//     job = updatedJob;
-//     //setJob(updatedJob);
+// useEffect(() => {
+//   if (jobNodes.jobNumber !== currentJob){
+//     jobNodes.nodes = job[currentJob].tree;
+//     jobNodes.jobNumber = currentJob;
 //   }
-// }, [job]);
+//   else {
+//     jobNodes.nodes = [...jobNodes.nodes, addedObject];
+//   }
+// }) 
 const [data, setData] = useState([]);
 
 useEffect(() => {
@@ -177,20 +105,14 @@ useEffect(() => {
   fetchData();
 }, []); // Empty dependency array means this will run once after component mount
 
-
   return (
     <div>
       <div className="nodeWindowBorder"></div>
       <div className="nodeContainer" onClick={getMouseEventOptions}>
-        {Array.isArray(jobNodes) && jobNodes.map((obj) => (
+        {Array.isArray(job[currentJob].tree) && job[currentJob].tree.map((obj) => (
             <div
             className="box text"
-            onClick={() => SwitchJob(obj.id)  } 
-
-            key={obj.id}
-
-            
-            >
+            key={obj.id}>
             {obj.subject}
             </div>
         ))}

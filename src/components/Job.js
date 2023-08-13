@@ -37,7 +37,8 @@ function Job({ job, setJob, sendDataToParent }) {
         const jobID = job.length
 
         //Stores the job type
-        const jobType = prompt('Enter 1 to create a new ticket, and 2 to create a new project');
+        //temporarily commented out
+        //const jobType = prompt('Enter 1 to create a new ticket, and 2 to create a new project');
 
         //Stores the job title
         const userInputJobTitle = prompt("Enter the job title: ");
@@ -45,8 +46,10 @@ function Job({ job, setJob, sendDataToParent }) {
         //Create the new job object
         const newObject = {
             id: jobID,
-            type: jobType,
-            title: userInputJobTitle
+            //termporarily commented out
+            //type: jobType,
+            title: userInputJobTitle,
+            tree: {id: 0, subject: "Root"}
         }
 
         //Add the new job object to the job array
@@ -73,6 +76,8 @@ function Job({ job, setJob, sendDataToParent }) {
                 onClick={() => {
                     setSelectedJobNum(obj.id);
                     handleClick(obj.id);
+                    console.log("the job length is: ")
+                    console.log(job)
                   }}
                 //style={{ backgroundColor: obj.id === selectedJob ? 'violet' : 'lightblue' }}
             >
