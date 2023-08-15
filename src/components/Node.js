@@ -98,22 +98,21 @@ const [jobNodes, setJobNodes] = useState( { nodes: nodesVal, jobNumber: jobNumbe
       
     }
     else if (newObject !== undefined && jobNodes.jobNumber !== currentJob){
-      // jobNodes.nodes = job[currentJob].tree;
-      // jobNodes.nodes = [...jobNodes.nodes, newObject];
-      // jobNodes.jobNumber = currentJob;
+      // setJobNodes({
+      //   ...jobNodes,
+      //   nodes: [job[currentJob].tree] // Spread the existing nodes and add newObject
+      // });
 
+      // setJobNodes({
+      //   ...jobNodes,
+      //   nodes: [...jobNodes.nodes, newObject], // Spread the existing nodes and add newObject
+      //   jobNumber: currentJob
+      // });
       setJobNodes({
         ...jobNodes,
-        nodes: [job[currentJob].tree] // Spread the existing nodes and add newObject
-      });
-
-      setJobNodes({
-        ...jobNodes,
-        nodes: [...jobNodes.nodes, newObject], // Spread the existing nodes and add newObject
+        nodes: [job[currentJob].tree], // Spread the existing nodes and add newObject
         jobNumber: currentJob
       });
-      
-      
     }
 
     jobNodes.jobNumber = currentJob;
