@@ -19,7 +19,7 @@ function Node( { job, currentJob, sendNodeDataToParent }) {
   //initialization
   //const [jobNodes, setJobNodes] = useState(job[currentJob].tree);
 
-  const nodesVal = [{id:0, subject:"Root"}]; // initialize nodes here
+  const nodesVal = [{id:0, subject:"Root"}, {id:1, subject:"Yup"}]; // initialize nodes here
 const jobNumberVal = 0; // initialize jobNumber here
 
 //const [jobNodes, setJobNodes] = useState([nodes: nodesVal, jobNumber: jobNumberVal]);
@@ -72,8 +72,48 @@ const [jobNodes, setJobNodes] = useState( { nodes: nodesVal, jobNumber: jobNumbe
     console.log(jobNodes); // Check what jobNodes.nodes contains
     console.log("newObject is --------------------------------------");
     console.log(newObject);
-    if (newObject.id !== undefined){
-      jobNodes.nodes = [...jobNodes.nodes, newObject];
+    if (newObject.id !== undefined && jobNodes.jobNumber === currentJob){
+      //jobNodes.nodes = [...jobNodes.nodes, newObject];
+
+      // setJobNodes(prevJobNodes => [
+      //   ...prevJobNodes.map(jobNodes => ({
+      //     ...jobNodes,
+      //     nodes: [...jobNodes.nodes, newObject]
+      //   }))
+      // ]);
+
+      // setJobNodes(prevjobNodes => [
+      //   ...prevjobNodes.map(jobNodes => ({
+      //     ...jobNodes,
+      //     nodes: [...jobNodes.nodes, newObject]
+      //   }))
+      // ]);
+
+      // setJobNodes ({...jobNodes, nodes: jobNodes.nodes, newObject});
+
+      setJobNodes({
+        ...jobNodes,
+        nodes: [...jobNodes.nodes, newObject] // Spread the existing nodes and add newObject
+      });
+      
+    }
+    else if (newObject !== undefined && jobNodes.jobNumber !== currentJob){
+      // jobNodes.nodes = job[currentJob].tree;
+      // jobNodes.nodes = [...jobNodes.nodes, newObject];
+      // jobNodes.jobNumber = currentJob;
+
+      setJobNodes({
+        ...jobNodes,
+        nodes: [job[currentJob].tree] // Spread the existing nodes and add newObject
+      });
+
+      setJobNodes({
+        ...jobNodes,
+        nodes: [...jobNodes.nodes, newObject], // Spread the existing nodes and add newObject
+        jobNumber: currentJob
+      });
+      
+      
     }
 
     jobNodes.jobNumber = currentJob;
