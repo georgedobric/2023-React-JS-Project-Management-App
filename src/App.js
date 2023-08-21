@@ -18,6 +18,7 @@ function App() {
 
   const JobSelector = (id) => {
     setSelectedJob(id);
+    setSelectedNode(0);
     setJobSelectStatus(true);
     setNoJobSelection(false);
     console.log("The selected job is: ", SelectedJob);
