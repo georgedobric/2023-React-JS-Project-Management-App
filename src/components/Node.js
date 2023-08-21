@@ -45,13 +45,12 @@ function Node(props) {
           <div className="textSubHeader">Subject: {props.jobs[props.SelectedJob].tree[props.SelectedNode].subject}</div>
           <br />
           <div className="textSubHeader">ID: {props.jobs[props.SelectedJob].tree[props.SelectedNode].id}</div>
-          <br />
           <p className='textSubHeader'>Objective: {props.jobs[props.SelectedJob].tree[props.SelectedNode].objective}</p>
-          <br />
           <input
         type="Objective"
         value={userInput}
         onChange={handleNodeObjective}
+        className='nodeInfoInput'
         placeholder="Enter the objective, what do you aim to achieve here?"
       />
         </div>

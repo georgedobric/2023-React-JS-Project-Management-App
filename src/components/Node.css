@@ -128,6 +128,10 @@
     position: fixed;
   }
 
+  .nodeInfoInput {
+    width: 43vw; /* Adjust the width value as needed */
+  }
+  
   .addJobBox {
     background-color: rgb(132, 240, 128);
     padding: 10px;
