@@ -78,17 +78,6 @@
     position: static;
 }
 
-.box::after {
-    content: "";
-    position: static;
-    top: 100%; /* Position the line below the box */
-    left: 50%;
-    transform: translateX(-50%);
-    width: 2px;
-    height: 20px;
-    background-color: black; /* Draw the branch line which connects adjacent nodes */
-  }
-
 .boxStage1 {
     background-color: lightcoral;
     padding: 10px;
