@@ -73,4 +73,6 @@
 
 .text {
     color: white;
+    overflow-x: auto; /* This will add a horizontal scrollbar when content overflows */
+    white-space: nowrap; /* Prevent text from wrapping to the next line */
   }
