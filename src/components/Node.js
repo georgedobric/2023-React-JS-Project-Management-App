@@ -12,6 +12,18 @@ function Node(props) {
     props.NodeSelector(id);
   }
 
+  let objectiveInput = '';
+  const [userInput, setUserInput] = useState('');
+  const handleNodeObjective = (event) => {
+    objectiveInput = objectiveInput + event.target.value;
+    setUserInput(event.target.value);
+  }
+
+  const handleUpdate = (objective) => {
+    props.NodeObjectiveModifier(objective);
+    //props.jobs[props.SelectedJob].tree[props.SelectedNode].objective
+  }
+
   return (
     <div>
     <div className='nodeWindowBorder'></div>
@@ -30,17 +42,24 @@ function Node(props) {
     <div className="info">
         <div className="textHeader">Node Info</div>
         <div className="nodeInfoText">
-          <div className="textSubHeader">Subject:</div>
+          <div className="textSubHeader">Subject: {props.jobs[props.SelectedJob].tree[props.SelectedNode].subject}</div>
           <br />
-          {props.jobs[props.SelectedJob].tree[props.SelectedNode].subject}
+          <div className="textSubHeader">ID: {props.jobs[props.SelectedJob].tree[props.SelectedNode].id}</div>
           <br />
-          <div className="textSubHeader">ID:</div>
+          <p className='textSubHeader'>Objective: {props.jobs[props.SelectedJob].tree[props.SelectedNode].objective}</p>
           <br />
-          {props.jobs[props.SelectedJob].tree[props.SelectedNode].id}
+          <input
+        type="Objective"
+        value={userInput}
+        onChange={handleNodeObjective}
+        placeholder="Enter the objective, what do you aim to achieve here?"
+      />
         </div>
         </div>
 
     <button class='addNodeBox' onClick={handleAddNode}>Add Node</button>
+    <button class='updateNodeBox' onClick={()=> {handleUpdate(userInput)}}>Update Node</button>
+
 
     </div>
   );

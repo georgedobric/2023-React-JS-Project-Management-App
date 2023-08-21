@@ -119,6 +119,15 @@
     position: fixed;
   }
 
+  .updateNodeBox {
+    background-color: rgb(128, 232, 240);
+    padding: 10px;
+    border-radius: 5px;
+    top: 15%;
+    right: 2vw;
+    position: fixed;
+  }
+
   .addJobBox {
     background-color: rgb(132, 240, 128);
     padding: 10px;
