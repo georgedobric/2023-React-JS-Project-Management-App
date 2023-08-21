@@ -4,82 +4,81 @@ import './components/Node.js'
 import React, { useState, useEffect } from 'react';
 import Node from './components/Node';
 import Job from './components/Job';
-//import Test from './components/Test';
-function App( { selectedJob }) {
 
-  //Create an array of job objects, expandable upon user input.
-   const [job, setJob] = useState([{id:0, title:'root', tree:[ { id: 0, subject: "Root" } ]}] );
-  //  const [job, setJob] = useState([
-  //   { id: 0, title:'first', tree: [{ id: 31, subject: 'code' }, { id: 32, subject: 'morecode' }] },
-  //   { id: 1, title:'root', tree: [{ id: 11, subject: 'Math' }, { id: 12, subject: 'Science' }] },
-  //   { id: 2, title:'two', tree: [{ id: 21, subject: 'History' }, { id: 22, subject: 'Geography' }] }
-  // ]);
-  //const [job, setJob] = useState([{id:0}]);
+function App() {
+  const [Jobs, setJobs] = useState([{id:1, title:'Ticket', tree:[ { id: 1, subject: 'Jira' }, { id: 2, subject: 'Email' } ]},
+                                    {id:2, title:'Project', tree:[ { id: 1, subject: 'Meeting' }, { id: 2, subject: 'Spec' }
+ ]}] );
+  const currentJob = 0;
+  const [SelectedJob, setSelectedJob] = useState(0);
+  const [SelectedNode, setSelectedNode] = useState(0);
+  const [JobSelectStatus, setJobSelectStatus] = useState(false);
+  const [NoJobSelection, setNoJobSelection] = useState(true);
 
-  job.current = 0;
-  ////////////////////////////////
-  //Create and handle the selected job number from the job component
-  const [dataFromChild, setDataFromChild] = useState(0); //previously was useState('')
 
-  const handleDataFromChild = (data) => {
-    setDataFromChild(data);
-  };
-  ////////////////////////////////
+  const JobSelector = (id) => {
+    setSelectedJob(id);
+    setJobSelectStatus(true);
+    setNoJobSelection(false);
+    console.log("The selected job is: ", SelectedJob);
+  }
 
-  //Update the current job's node tree using data from node.js
-  const [nodeDataFromChild, setNodeDataFromChild] = useState('');
+  const JobModifier = (obj) => {
+    const updatedJob = [...Jobs, obj];
+    setJobs(updatedJob);
+  }
 
-  const updateJobTree = (data) => {
-    setNodeDataFromChild(data);
-  };
+  const NodeSelector = (id) => {
+    setSelectedNode(id);
+    // setJobSelectStatus(true);
+    // setNoJobSelection(false);
+    console.log("The selected job is: ", SelectedNode);
+  }
 
-  useEffect(() => {
-    console.log(job); // Log the updated state on each re-render
+  const NodeModifier = (obj) => {
+    // const updatedTree = [...Jobs[SelectedJob].tree, obj];
+    // setJobs(...Jobs, Jobs[SelectedJob].tree = updatedTree);
 
-    job.current = dataFromChild; //edit 06.28.23
-    if (nodeDataFromChild != ""){
-    job[job.current].tree = nodeDataFromChild; //August 9th, 23 edit
-    }
-  }, [job]);
+    const updatedTree = [...Jobs[SelectedJob].tree, obj];
+  const updatedJobs = [...Jobs]; // Copy the existing Jobs array
+  updatedJobs[SelectedJob].tree = updatedTree; // Update the selected job's tree
+  setJobs(updatedJobs); // Update the state
+  }
 
-  /*const asdf = document.getElementById('viewing');
+//   useEffect( () => {
+//     if (SelectedJob > 0){
+//       noJobSelected = false;
+//     }
+// }, [SelectedJob]);
 
-  asdf.addEventListener('mouseenter', () => {
-    asdf.classList.add('hovered');
-  });
-  
-  asdf.addEventListener('mouseleave', () => {
-    asdf.classList.remove('hovered');
-  });*/
-
-  //id='viewing' should be added to the <p>  selected job div if that is the intention
 
   return (
-    <div className='contianer'>
-      <Job job={job} setJob={setJob} sendDataToParent={handleDataFromChild}/>
-      <div>
-      <Node job={job} currentJob={dataFromChild || 0} sendNodeDataToParent={updateJobTree}/>
+    <div>
+      <div class='titleFont'>Symbio.sys</div>
+      <br></br>
+      <div class='jobBar'>
+        <div class='jobFont'>Jobs</div>
+        <Job jobs={Jobs} 
+          JobSelector={JobSelector} 
+          SelectedJob={SelectedJob} 
+          JobSelectStatus={JobSelectStatus} 
+          NoJobSelection={NoJobSelection}
+          JobModifier={JobModifier}></Job>
       </div>
-      <div style={{ textAlign: 'center' }}>
-      <p className='selectedJob'>Selected Job: {dataFromChild}</p>
+      <br></br>
+      <div class='nodeBar'>
+        <div class='nodeFont'>Nodes</div>
+        <Node jobs={Jobs} 
+          SelectedJob={SelectedJob} 
+          JobSelectStatus={JobSelectStatus} 
+          NodeModifier={NodeModifier}
+          SelectedNode={SelectedNode}
+          NodeSelector={NodeSelector}></Node>
       </div>
     </div>
   );
 }
 
-//ReactDOM.render(<App />, document.getElementById('root'));
 export default App;
 
 
-/* // reactdom is no longer supported, switch to create root instead
-import { createRoot } from 'react-dom';
-
-// ...
-
-// Create a root using createRoot
-const rootElement = document.getElementById('root');
-const root = createRoot(rootElement);
-
-// Render your React component
-root.render(<App />);
-*/
