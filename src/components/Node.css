@@ -131,6 +131,11 @@
     color: white;
   }
 
+  .nodeInfoText {
+    color: white;
+    word-wrap: break-word; 
+  }
+
   .textHeader {
     color: white;
     font-size: 2em;

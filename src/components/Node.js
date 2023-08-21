@@ -29,7 +29,7 @@ function Node(props) {
 
     <div className="info">
         <div className="textHeader">Node Info</div>
-        <div className="text">
+        <div className="nodeInfoText">
           <div className="textSubHeader">Subject:</div>
           <br />
           {props.jobs[props.SelectedJob].tree[props.SelectedNode].subject}
