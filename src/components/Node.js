@@ -101,7 +101,7 @@ function Node(props) {
       ))}
     </div>
 
-    {Preview && <div className="previewBox text">{props.jobs[props.SelectedJob].tree[PreviewID].objective}</div>}
+    {Preview && <div className="previewBox text">{props.jobs[props.SelectedJob].tree[PreviewID].subject}'s objective: {props.jobs[props.SelectedJob].tree[PreviewID].objective}</div>}
 
 
     <div className="info">
