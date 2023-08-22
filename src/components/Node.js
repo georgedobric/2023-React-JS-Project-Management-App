@@ -5,9 +5,11 @@ import { getMouseEventOptions } from "@testing-library/user-event/dist/utils";
 function Node(props) {
   //Detect the cursor if it hovers over a node, to enable node-preview functionality
   const [Preview, setPreview] = useState(false);
+  const[PreviewID, setPreviewID] = useState(0);
 
-  const handleMouseEnter = () => {
+  const handleMouseEnter = (id) => {
     setPreview(true);
+    setPreviewID(id - 1);
   };
 
   const handleMouseLeave = () => {
@@ -75,6 +77,7 @@ function Node(props) {
   }
   useEffect (() => {
     console.log(Preview);
+
   }, [Preview]);
 
   return (
@@ -84,8 +87,12 @@ function Node(props) {
       {props.JobSelectStatus && props.jobs[props.SelectedJob].tree.map((obj) => (
         <div key={obj.id}
         className='box text'
-        onMouseEnter={handleMouseEnter}
-        onMouseLeave={handleMouseLeave}
+        onMouseEnter={() => {
+          handleMouseEnter(obj.id);
+        }}
+        onMouseLeave={() => {
+          handleMouseLeave();
+        }}
         onClick={() => {
           handleNodeSelect(obj.id - 1);
         }}>
@@ -94,12 +101,16 @@ function Node(props) {
       ))}
     </div>
 
+    {Preview && <div className="previewBox text">{props.jobs[props.SelectedJob].tree[PreviewID].objective}</div>}
+
+
     <div className="info">
         <div className="textHeader">Node Info</div>
         <div className="nodeInfoText">
           <div className="textSubHeader">Subject: {props.jobs[props.SelectedJob].tree[props.SelectedNode].subject}</div>
           <br />
           <div className="textSubHeader">ID: {props.jobs[props.SelectedJob].tree[props.SelectedNode].id}</div>
+
           <p className='textSubHeader'>Objective: {props.jobs[props.SelectedJob].tree[props.SelectedNode].objective}</p>
           <input
         type="Objective"

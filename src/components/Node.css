@@ -78,6 +78,21 @@
     position: static;
 }
 
+.previewBox {
+  position:absolute;  
+  background-color: lightblue;
+    padding: 10px;
+    border-radius: 5px;
+    width: 10vw; /* Set the width to 1/20th of the viewport width */
+    margin-bottom: 10px;
+    margin-left: 200px;
+    top: 49vh;
+    display: flex;
+    flex-wrap: wrap;
+    flex: 1;
+    z-index: 1;
+}
+
 .boxStage1 {
     background-color: lightcoral;
     padding: 10px;
