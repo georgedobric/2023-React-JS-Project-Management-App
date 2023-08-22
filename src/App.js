@@ -83,6 +83,50 @@ function App() {
     setJobSelectStatus(updatedJobs);
   }
 
+  const NodeCollaborationModifier = (event) => {
+    const updatedNodePlan = [
+      ...Jobs[SelectedJob].tree.slice(0, SelectedNode), // Copy elements before the selected node
+      {
+        ...Jobs[SelectedJob].tree[SelectedNode], // Copy the selected node
+        collaboration: event, // Modify the 'objective' property
+      },
+      ...Jobs[SelectedJob].tree.slice(SelectedNode + 1), // Copy elements after the selected node
+    ];
+    
+    const updatedJobs=[...Jobs];
+    updatedJobs[SelectedJob].tree = updatedNodePlan;
+    setJobSelectStatus(updatedJobs);
+  }
+
+  const NodeCommunicationModifier = (event) => {
+    const updatedNodePlan = [
+      ...Jobs[SelectedJob].tree.slice(0, SelectedNode), // Copy elements before the selected node
+      {
+        ...Jobs[SelectedJob].tree[SelectedNode], // Copy the selected node
+        communication: event, // Modify the 'objective' property
+      },
+      ...Jobs[SelectedJob].tree.slice(SelectedNode + 1), // Copy elements after the selected node
+    ];
+    
+    const updatedJobs=[...Jobs];
+    updatedJobs[SelectedJob].tree = updatedNodePlan;
+    setJobSelectStatus(updatedJobs);
+  }
+
+  const NodeRiskModifier = (event) => {
+    const updatedNodePlan = [
+      ...Jobs[SelectedJob].tree.slice(0, SelectedNode), // Copy elements before the selected node
+      {
+        ...Jobs[SelectedJob].tree[SelectedNode], // Copy the selected node
+        risk: event, // Modify the 'objective' property
+      },
+      ...Jobs[SelectedJob].tree.slice(SelectedNode + 1), // Copy elements after the selected node
+    ];
+    
+    const updatedJobs=[...Jobs];
+    updatedJobs[SelectedJob].tree = updatedNodePlan;
+    setJobSelectStatus(updatedJobs);
+  }
 
   return (
     <div>
@@ -107,7 +151,10 @@ function App() {
           SelectedNode={SelectedNode}
           NodeSelector={NodeSelector}
           NodeObjectiveModifier={NodeObjectiveModifier}
-          NodePlanModifier={NodePlanModifier}></Node>
+          NodePlanModifier={NodePlanModifier}
+          NodeCollaborationModifier={NodeCollaborationModifier}
+          NodeCommunicationModifier={NodeCommunicationModifier}
+          NodeRiskModifier={NodeRiskModifier}></Node>
       </div>
     </div>
   );

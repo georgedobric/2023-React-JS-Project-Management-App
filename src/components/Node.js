@@ -12,6 +12,8 @@ function Node(props) {
     props.NodeSelector(id);
   }
 
+  //Input Handlers:
+
   const [userInput, setUserInput] = useState('');
   const handleNodeObjective = (event) => {
     setUserInput(event.target.value);
@@ -22,6 +24,23 @@ function Node(props) {
     setUserInputPlan(event.target.value);
   }
 
+  const [userInputCollaboration, setUserInputCollaboration] = useState('');
+  const handleNodeCollaboration = (event) => {
+    setUserInputCollaboration(event.target.value);
+  }
+
+  const [userInputCommunication, setUserInputCommunication] = useState('');
+  const handleNodeCommunication = (event) => {
+    setUserInputCommunication(event.target.value);
+  }
+
+  const [userInputRisk, setUserInputRisk] = useState('');
+  const handleNodeRisk = (event) => {
+    setUserInputRisk(event.target.value);
+  }
+
+  //Update Handlers:
+
   const handleObjectiveUpdate = (objective) => {
     props.NodeObjectiveModifier(objective);
     //props.jobs[props.SelectedJob].tree[props.SelectedNode].objective
@@ -29,6 +48,18 @@ function Node(props) {
 
   const handlePlanUpdate = (objective) => {
     props.NodePlanModifier(objective);
+  }
+
+  const handleCollaborationUpdate = (objective) => {
+    props.NodeCollaborationModifier(objective);
+  }
+
+  const handleCommunicationUpdate = (objective) => {
+    props.NodeCommunicationModifier(objective);
+  }
+
+  const handleRiskUpdate = (objective) => {
+    props.NodeRiskModifier(objective);
   }
 
   return (
@@ -68,11 +99,35 @@ function Node(props) {
         className='nodeInfoInput'
         placeholder="Enter the plan: Can I define some tasks to reach this objective? Can I create a schedule? Can I allocate resources? Can I set some milestones?"
       />
+      <p className='textSubHeader'>Collaboration: {props.jobs[props.SelectedJob].tree[props.SelectedNode].collaboration}</p>
+          <input
+        type="Objective"
+        value={userInputCollaboration}
+        onChange={handleNodeCollaboration}
+        className='nodeInfoInput'
+        placeholder="Can I leverage an internal resource?"
+      />
+      <p className='textSubHeader'>Communication: {props.jobs[props.SelectedJob].tree[props.SelectedNode].communication}</p>
+          <input
+        type="Objective"
+        value={userInputCommunication}
+        onChange={handleNodeCommunication}
+        className='nodeInfoInput'
+        placeholder="Please post the latest updates, any changes, improvements, issues? What are we working on right now?"
+      />
+      <p className='textSubHeader'>Risk Management: {props.jobs[props.SelectedJob].tree[props.SelectedNode].risk}</p>
+          <input
+        type="Objective"
+        value={userInputRisk}
+        onChange={handleNodeRisk}
+        className='nodeInfoInput'
+        placeholder="Enter possible risks: Are there any potential risks that I can foresee at this point in time?"
+      />
         </div>
         </div>
 
     <button class='addNodeBox' onClick={handleAddNode}>Add Node</button>
-    <button class='updateNodeBox' onClick={()=> {handleObjectiveUpdate(userInput); handlePlanUpdate(userInputPlan)}}>Update Node</button>
+    <button class='updateNodeBox' onClick={()=> {handleObjectiveUpdate(userInput); handlePlanUpdate(userInputPlan); handleCollaborationUpdate(userInputCollaboration); handleCommunicationUpdate(userInputCommunication); handleRiskUpdate(userInputRisk)}}>Update Node</button>
 
 
     </div>
