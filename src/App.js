@@ -6,7 +6,7 @@ import Node from './components/Node';
 import Job from './components/Job';
 
 function App() {
-  const [Jobs, setJobs] = useState([{id:1, title:'Ticket', tree:[ { id: 1, subject: 'Root', objective: '' }]}
+  const [Jobs, setJobs] = useState([{id:1, title:'Ticket', tree:[ { id: 1, subject: 'Root', objective: '', plan: '', communication: '', collaboration: '', risk: ''}]}
  ]);
   const currentJob = 0;
   const [SelectedJob, setSelectedJob] = useState(0);
@@ -68,6 +68,21 @@ function App() {
     setJobSelectStatus(updatedJobs);
   }
 
+  const NodePlanModifier = (event) => {
+    const updatedNodePlan = [
+      ...Jobs[SelectedJob].tree.slice(0, SelectedNode), // Copy elements before the selected node
+      {
+        ...Jobs[SelectedJob].tree[SelectedNode], // Copy the selected node
+        plan: event, // Modify the 'objective' property
+      },
+      ...Jobs[SelectedJob].tree.slice(SelectedNode + 1), // Copy elements after the selected node
+    ];
+    
+    const updatedJobs=[...Jobs];
+    updatedJobs[SelectedJob].tree = updatedNodePlan;
+    setJobSelectStatus(updatedJobs);
+  }
+
 
   return (
     <div>
@@ -91,7 +106,8 @@ function App() {
           NodeModifier={NodeModifier}
           SelectedNode={SelectedNode}
           NodeSelector={NodeSelector}
-          NodeObjectiveModifier={NodeObjectiveModifier}></Node>
+          NodeObjectiveModifier={NodeObjectiveModifier}
+          NodePlanModifier={NodePlanModifier}></Node>
       </div>
     </div>
   );

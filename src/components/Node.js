@@ -12,16 +12,23 @@ function Node(props) {
     props.NodeSelector(id);
   }
 
-  let objectiveInput = '';
   const [userInput, setUserInput] = useState('');
   const handleNodeObjective = (event) => {
-    objectiveInput = objectiveInput + event.target.value;
     setUserInput(event.target.value);
   }
 
-  const handleUpdate = (objective) => {
+  const [userInputPlan, setUserInputPlan] = useState('');
+  const handleNodePlan = (event) => {
+    setUserInputPlan(event.target.value);
+  }
+
+  const handleObjectiveUpdate = (objective) => {
     props.NodeObjectiveModifier(objective);
     //props.jobs[props.SelectedJob].tree[props.SelectedNode].objective
+  }
+
+  const handlePlanUpdate = (objective) => {
+    props.NodePlanModifier(objective);
   }
 
   return (
@@ -53,11 +60,19 @@ function Node(props) {
         className='nodeInfoInput'
         placeholder="Enter the objective, what do you aim to achieve here?"
       />
+      <p className='textSubHeader'>Planning: {props.jobs[props.SelectedJob].tree[props.SelectedNode].plan}</p>
+          <input
+        type="Objective"
+        value={userInputPlan}
+        onChange={handleNodePlan}
+        className='nodeInfoInput'
+        placeholder="Enter the plan: Can I define some tasks to reach this objective? Can I create a schedule? Can I allocate resources? Can I set some milestones?"
+      />
         </div>
         </div>
 
     <button class='addNodeBox' onClick={handleAddNode}>Add Node</button>
-    <button class='updateNodeBox' onClick={()=> {handleUpdate(userInput)}}>Update Node</button>
+    <button class='updateNodeBox' onClick={()=> {handleObjectiveUpdate(userInput); handlePlanUpdate(userInputPlan)}}>Update Node</button>
 
 
     </div>
