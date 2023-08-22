@@ -3,6 +3,18 @@ import "./Node.css";
 import { getMouseEventOptions } from "@testing-library/user-event/dist/utils";
 
 function Node(props) {
+  //Detect the cursor if it hovers over a node, to enable node-preview functionality
+  const [Preview, setPreview] = useState(false);
+
+  const handleMouseEnter = () => {
+    setPreview(true);
+  };
+
+  const handleMouseLeave = () => {
+    setPreview(false);
+  };
+
+  //Add a new node to the selected job
   const handleAddNode = () => {
     const newNode = {id:props.jobs[props.SelectedJob].tree.length+1, subject:prompt('Enter a node subject'), };
     props.NodeModifier(newNode);
@@ -61,6 +73,9 @@ function Node(props) {
   const handleRiskUpdate = (objective) => {
     props.NodeRiskModifier(objective);
   }
+  useEffect (() => {
+    console.log(Preview);
+  }, [Preview]);
 
   return (
     <div>
@@ -69,6 +84,8 @@ function Node(props) {
       {props.JobSelectStatus && props.jobs[props.SelectedJob].tree.map((obj) => (
         <div key={obj.id}
         className='box text'
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
         onClick={() => {
           handleNodeSelect(obj.id - 1);
         }}>
