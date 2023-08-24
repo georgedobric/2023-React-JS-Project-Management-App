@@ -5,7 +5,8 @@ import { getMouseEventOptions } from "@testing-library/user-event/dist/utils";
 function Node(props) {
   //Detect the cursor if it hovers over a node, to enable node-preview functionality
   const [Preview, setPreview] = useState(false);
-  const[PreviewID, setPreviewID] = useState(0);
+  const [PreviewID, setPreviewID] = useState(0);
+  const [ScrollingUp, setScrollingUp] = useState(false);
 
   const handleMouseEnter = (id) => {
     setPreview(true);
@@ -76,9 +77,46 @@ function Node(props) {
     props.NodeRiskModifier(objective);
   }
   useEffect (() => {
-    console.log(Preview);
+    console.log("Preview is: " + Preview);
 
   }, [Preview]);
+
+  useEffect (() => {
+    console.log("scrollUpStatus is: " + ScrollingUp);
+
+  }, [Preview]);
+
+  //Scroll up while previewing a node to enter a lower level, more technical, under said node.
+
+  const handleStepDown = (nodePreview, scrollUpStatus, nodeID) => {
+    if (nodePreview == true && scrollUpStatus == true) {
+      console.log('step down');
+    }
+  }
+
+  //Handle scroll logic
+
+  const handleScroll = (event) => {
+    try {
+    if (event.deltaY < 0) {
+      console.log('Scrolling up');
+      setScrollingUp(true)
+    }
+    else if (event.deltaY === 0) {
+      // setScrollingUp(false);
+    }
+  } catch (error) {
+    // Code to handle the error
+    console.error("An error occurred:", error);
+}
+  };
+
+  useEffect(() => {
+    window.addEventListener('wheel', handleScroll);
+    return () => {
+      window.removeEventListener('wheel', handleScroll);
+    };
+  }, []);
 
   return (
     <div>
@@ -95,6 +133,9 @@ function Node(props) {
         }}
         onClick={() => {
           handleNodeSelect(obj.id - 1);
+        }}
+        onWheel={() => {
+          handleStepDown(Preview, ScrollingUp, PreviewID);
         }}>
           {obj.subject}
       </div>
