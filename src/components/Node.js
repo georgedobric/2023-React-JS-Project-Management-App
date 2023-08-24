@@ -76,30 +76,28 @@ function Node(props) {
   const handleRiskUpdate = (objective) => {
     props.NodeRiskModifier(objective);
   }
-  useEffect (() => {
-    console.log("Preview is: " + Preview);
-
-  }, [Preview]);
-
-  useEffect (() => {
-    console.log("scrollUpStatus is: " + ScrollingUp);
-
-  }, [Preview]);
 
   //Scroll up while previewing a node to enter a lower level, more technical, under said node.
+
+  const [HierarchyLevel, setHierarchyLevel] = useState(1);
 
   const handleStepDown = (nodePreview, scrollUpStatus, nodeID) => {
     if (nodePreview == true && scrollUpStatus == true) {
       console.log('step down');
-    }
+      if (nodePreview === true) {
+        const hLevel = HierarchyLevel + 1;
+        setHierarchyLevel(hLevel);
+        console.log("Hierarchy Level is: " + HierarchyLevel);
+        setPreview(false);
+      }
   }
+}
 
   //Handle scroll logic
 
   const handleScroll = (event) => {
     try {
     if (event.deltaY < 0) {
-      console.log('Scrolling up');
       setScrollingUp(true)
     }
     else if (event.deltaY === 0) {
