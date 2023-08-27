@@ -10,7 +10,7 @@ function App() {
  ]);
   const currentJob = 0;
   const [SelectedJob, setSelectedJob] = useState(0);
-  const [SelectedNode, setSelectedNode] = useState([0]);
+  let [SelectedNode, setSelectedNode] = useState([1,1]);
   const [Hierarchy, setHierarchy] = useState([1]);
   const [JobSelectStatus, setJobSelectStatus] = useState(false);
   const [NoJobSelection, setNoJobSelection] = useState(true);
@@ -18,7 +18,7 @@ function App() {
 
   const JobSelector = (id) => {
     setSelectedJob(id);
-    setSelectedNode(0);
+    // setSelectedNode([1,1]);
     setJobSelectStatus(true);
     setNoJobSelection(false);
     console.log("The selected job is: ", SelectedJob);
@@ -30,7 +30,9 @@ function App() {
   }
 
   const NodeSelector = (id) => {
-    setSelectedNode(id);
+    let updatedNodeSelect = id;
+    // SelectedNode = updatedNodeSelect;
+    setSelectedNode(updatedNodeSelect);
     // setJobSelectStatus(true);
     // setNoJobSelection(false);
     console.log("The selected job is: ", SelectedNode);

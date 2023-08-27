@@ -51,7 +51,8 @@ function Node(props) {
     // if (props.jobs[props.SelectedJob].tree[props.SelectedNode].nodeID.length - 1 === props.jobs[props.SelectedJob].tree[props.SelectedNode].hierarchy.length) {
     //   const targetHierarchyMatching = 
     // }
-    const targetHierarchy = props.jobs[props.SelectedJob].tree[props.SelectedNode].nodeID.slice(0,-1);
+    // const targetHierarchy = props.jobs[props.SelectedJob].tree[props.SelectedNode].nodeID.slice(0,-1);
+    const targetHierarchy = foundObject.nodeID.slice(0,-1);
     const hierarchyLength = hierarchyLengthCounter(targetHierarchy);
 
     // const updatedNodeID = props.jobs[props.SelectedJob].tree.id;
@@ -193,6 +194,21 @@ function Node(props) {
     };
   }, []);
 
+  //target the selected node for the node info display
+  // const targetValue = 5;
+
+  const foundObject = props.jobs[props.SelectedJob].tree.find(obj =>
+    obj.nodeID.length === props.SelectedNode.length &&
+    obj.nodeID.every((nodeID, index) => nodeID === props.SelectedNode[index])
+    );
+
+  // if (foundObject) {
+  //   console.log("Found object:", foundObject);
+  // } else {
+  //   console.log("No object found with the target value.");
+  // }
+
+
   return (
     <div>
     <div className='nodeWindowBorder'></div>
@@ -223,11 +239,11 @@ function Node(props) {
     <div className="info">
         <div className="textHeader">Node Info</div>
         <div className="nodeInfoText">
-          <div className="textSubHeader">Subject: {props.jobs[props.SelectedJob].tree[props.SelectedNode].subject}</div>
+          <div className="textSubHeader">Subject: {foundObject.subject}</div>
           <br />
-          <div className="textSubHeader">ID: {props.jobs[props.SelectedJob].tree[props.SelectedNode].id}</div>
+          <div className="textSubHeader">ID: {foundObject.id}</div>
 
-          <p className='textSubHeader'>Objective: {props.jobs[props.SelectedJob].tree[props.SelectedNode].objective}</p>
+          <p className='textSubHeader'>Objective: {foundObject.objective}</p>
           <input
         type="Objective"
         value={userInput}
@@ -235,7 +251,7 @@ function Node(props) {
         className='nodeInfoInput'
         placeholder="Enter the objective, what do you aim to achieve here?"
       />
-      <p className='textSubHeader'>Planning: {props.jobs[props.SelectedJob].tree[props.SelectedNode].plan}</p>
+      <p className='textSubHeader'>Planning: {foundObject.plan}</p>
           <input
         type="Objective"
         value={userInputPlan}
@@ -243,7 +259,7 @@ function Node(props) {
         className='nodeInfoInput'
         placeholder="Enter the plan: Can I define some tasks to reach this objective? Can I create a schedule? Can I allocate resources? Can I set some milestones?"
       />
-      <p className='textSubHeader'>Collaboration: {props.jobs[props.SelectedJob].tree[props.SelectedNode].collaboration}</p>
+      <p className='textSubHeader'>Collaboration: {foundObject.collaboration}</p>
           <input
         type="Objective"
         value={userInputCollaboration}
@@ -251,7 +267,7 @@ function Node(props) {
         className='nodeInfoInput'
         placeholder="Can I leverage an internal resource?"
       />
-      <p className='textSubHeader'>Communication: {props.jobs[props.SelectedJob].tree[props.SelectedNode].communication}</p>
+      <p className='textSubHeader'>Communication: {foundObject.communication}</p>
           <input
         type="Objective"
         value={userInputCommunication}
@@ -259,7 +275,7 @@ function Node(props) {
         className='nodeInfoInput'
         placeholder="Please post the latest updates, any changes, improvements, issues? What are we working on right now?"
       />
-      <p className='textSubHeader'>Risk Management: {props.jobs[props.SelectedJob].tree[props.SelectedNode].risk}</p>
+      <p className='textSubHeader'>Risk Management: {foundObject.risk}</p>
           <input
         type="Objective"
         value={userInputRisk}
