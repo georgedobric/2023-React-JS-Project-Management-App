@@ -4,6 +4,7 @@ import { getMouseEventOptions } from "@testing-library/user-event/dist/utils";
 
 function Node(props) {
   //Detect the cursor if it hovers over a node, to enable node-preview functionality
+
   const [Preview, setPreview] = useState(false);
   const [PreviewID, setPreviewID] = useState(0);
   const [ScrollingUp, setScrollingUp] = useState(false);
@@ -17,9 +18,49 @@ function Node(props) {
     setPreview(false);
   };
 
+
+  //Count the hierarcy length
+  const hierarchyLengthCounter = (targetHierarchy) => {
+    let count = 0;
+    
+    props.jobs[props.SelectedJob].tree.forEach(node => {
+      const nodeHierarchy = node.nodeID.slice(0, -1); // Extract all but the last element
+      if (JSON.stringify(nodeHierarchy) === JSON.stringify(targetHierarchy)) {
+        count++;
+      }
+    });
+    
+    return count;
+  };
+  
+
   //Add a new node to the selected job
+
   const handleAddNode = () => {
-    const newNode = {id:props.jobs[props.SelectedJob].tree.length+1, subject:prompt('Enter a node subject'), };
+    //assign the unique node identifier
+    // setSelectedNodeTree(...props.jobs[props.SelectedJob].tree[props.SelectedNode].selectedNodeTree, props.jobs[props.SelectedJob].id);
+    // const updatedSelectedNodeTree = [...SelectedNodeTree, props.SelectedNode];
+    // props.NodeSelectedNodeTreeModifier(updatedSelectedNodeTree);
+
+    // const updatedHierarchy = [props.jobs[props.SelectedJob].tree.length+1, 1]; //the second parameter should be the length of said hierarchy
+    //also the second parameter should be under handlenestednode adding not here, here just the first parameter is fine, for now.
+    //or I can remove the nestedhandler and just use this, by having the selected node changed to selectedtreenode, the matrix array
+    //and just map the length of the selected hierarchy, which is an array like selectedtreenode, with one less element, marking all nodes of the same hierarchy
+
+    //i need to use slice of length - 1 on the nodeID to set the hierarchy and to find hierarchy length, in order to assign newest nodes nodeID unique identifier.
+    // if (props.jobs[props.SelectedJob].tree[props.SelectedNode].nodeID.length - 1 === props.jobs[props.SelectedJob].tree[props.SelectedNode].hierarchy.length) {
+    //   const targetHierarchyMatching = 
+    // }
+    const targetHierarchy = props.jobs[props.SelectedJob].tree[props.SelectedNode].nodeID.slice(0,-1);
+    const hierarchyLength = hierarchyLengthCounter(targetHierarchy);
+
+    // const updatedNodeID = props.jobs[props.SelectedJob].tree.id;
+    // const updatedHierarchy = [props.jobs[props.SelectedJob].tree.length+1, hierarchyLength + 1];
+
+    const updatedHierarchy = [...props.Hierarchy, hierarchyLength+1];
+    // const updatedHierarchy = [...targetHierarchy, hierarchyLength + 1];
+    const updatedNodeID = [...updatedHierarchy, targetHierarchy.length + 1];
+    const newNode = {id:targetHierarchy.length + 1, subject:prompt('Enter a node subject'), hierarchy:props.Hierarchy, nodeID:updatedHierarchy};
     props.NodeModifier(newNode);
   }
 
@@ -77,13 +118,49 @@ function Node(props) {
     props.NodeRiskModifier(objective);
   }
 
+  //Selected node array (the unique node identifier system)
+
+  const [SelectedNodeTree, setSelectedNodeTree] = useState([0]);
+
+  const handleSelectedNodeTree = () => {
+    // updatedSelectedNodeTree = [...selectedNodeTree, props.SelectedNode];
+    // const updatedJob = [...props.jobs, hierarchy: HierarchyLevel, tree[props.SelectedNode].selectedNodeTree: updatedSelectedNodeTree ];
+    
+    // const updatedSelectedNodeTree = [...SelectedNodeTree, props.SelectedNode];
+    // props.NodeSelectedNodeTreeModifier(updatedSelectedNodeTree);
+  }
+
   //Scroll up while previewing a node to enter a lower level, more technical, under said node.
+
+  const handleAddNestedNode = () => {
+    //assign the unique node identifier
+    setSelectedNodeTree([...props.jobs[props.SelectedJob].tree[props.SelectedNode].selectedNodeTree, 1]);
+
+    //so the above added number will be .length  but not of selected node rather of hierarchy, so hierarchy.length
+    //setSelectedNodeTree([...props.jobs[props.SelectedJob].tree[props.SelectedNode].selectedNodeTree, props.jobs[props.SelectedJob].tree[props.SelectedNode].tree.length]);
+    //for now, i'll use 1
+
+    //below is pseudocode for how the hierarchy should be set, this is to set the node id (selectednodetree) for the new node, since we need the length of that hierarchy's nodes
+    // const updatedHierarchy = [...props.Hierarchy, props.jobs[props.SelectedJob].id, props.jobs[SelectedJob].tree[hierarchy].map.length];
+    // props.setHierarchy(updatedHierarchy)
+    //to get started with implementing the above, lets assign each node a hierarchy first, the highest level, initial nodes should be initialized
+    // with an initial hierarchy array that is set simply to the node's id
+
+
+
+    // const updatedSelectedNodeTree = [...SelectedNodeTree, props.SelectedNode];
+    // props.NodeSelectedNodeTreeModifier(updatedSelectedNodeTree);
+
+    const newNode = {id:props.jobs[props.SelectedJob].tree.length+1, subject:prompt('Enter a node subject'), selectedNodeTree: SelectedNodeTree};
+    props.NodeModifier(newNode);
+  }
 
   const [HierarchyLevel, setHierarchyLevel] = useState(1);
 
   const handleStepDown = (nodePreview, scrollUpStatus, nodeID) => {
     if (nodePreview == true && scrollUpStatus == true) {
       console.log('step down');
+      handleAddNestedNode();
       if (nodePreview === true) {
         const hLevel = HierarchyLevel + 1;
         setHierarchyLevel(hLevel);
@@ -130,7 +207,7 @@ function Node(props) {
           handleMouseLeave();
         }}
         onClick={() => {
-          handleNodeSelect(obj.id - 1);
+          handleNodeSelect(obj.nodeID);
         }}
         onWheel={() => {
           handleStepDown(Preview, ScrollingUp, PreviewID);
@@ -193,8 +270,8 @@ function Node(props) {
         </div>
         </div>
 
-    <button class='addNodeBox' onClick={handleAddNode}>Add Node</button>
-    <button class='updateNodeBox' onClick={()=> {handleObjectiveUpdate(userInput); handlePlanUpdate(userInputPlan); handleCollaborationUpdate(userInputCollaboration); handleCommunicationUpdate(userInputCommunication); handleRiskUpdate(userInputRisk)}}>Update Node</button>
+    <button className='addNodeBox' onClick={handleAddNode}>Add Node</button>
+    <button className='updateNodeBox' onClick={()=> {handleObjectiveUpdate(userInput); handlePlanUpdate(userInputPlan); handleCollaborationUpdate(userInputCollaboration); handleCommunicationUpdate(userInputCommunication); handleRiskUpdate(userInputRisk)}}>Update Node</button>
 
 
     </div>

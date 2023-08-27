@@ -6,11 +6,12 @@ import Node from './components/Node';
 import Job from './components/Job';
 
 function App() {
-  const [Jobs, setJobs] = useState([{id:1, title:'Ticket', tree:[ { id: 1, subject: 'Root', objective: '', plan: '', communication: '', collaboration: '', risk: ''}]}
+  const [Jobs, setJobs] = useState([{id:1, title:'Ticket', tree:[ { id: 1, nodeID: [1,1], hierarchy: [1], subject: 'Root', objective: '', plan: '', communication: '', collaboration: '', risk: ''}]}
  ]);
   const currentJob = 0;
   const [SelectedJob, setSelectedJob] = useState(0);
-  const [SelectedNode, setSelectedNode] = useState(0);
+  const [SelectedNode, setSelectedNode] = useState([0]);
+  const [Hierarchy, setHierarchy] = useState([1]);
   const [JobSelectStatus, setJobSelectStatus] = useState(false);
   const [NoJobSelection, setNoJobSelection] = useState(true);
 
@@ -42,6 +43,21 @@ function App() {
     const updatedTree = [...Jobs[SelectedJob].tree, obj];
   const updatedJobs = [...Jobs]; // Copy the existing Jobs array
   updatedJobs[SelectedJob].tree = updatedTree; // Update the selected job's tree
+  setJobs(updatedJobs); // Update the state
+  }
+
+  const NestedNodeModifier = (obj) => {
+    // const updatedTree = [...Jobs[SelectedJob].tree, obj];
+    // setJobs(...Jobs, Jobs[SelectedJob].tree = updatedTree);
+
+  //   const updatedTree = [...Jobs[SelectedJob].tree, obj];
+  // const updatedJobs = [...Jobs]; // Copy the existing Jobs array
+  // updatedJobs[SelectedJob].tree[SelectedNode].tree = updatedTree; // Update the selected job's tree
+
+  // const updatedNestedTree = [...Jobs[SelectedJob].tree, obj];
+  const updatedJobs = [...Jobs]; // Copy the existing Jobs array
+  // updatedJobs[SelectedJob].tree[SelectedNode].tree = updatedNestedTree; // Update the selected job's tree
+  updatedJobs[SelectedJob].tree[SelectedNode].tree = obj; // Update the selected job's tree
   setJobs(updatedJobs); // Update the state
   }
 
@@ -128,6 +144,13 @@ function App() {
     setJobSelectStatus(updatedJobs);
   }
 
+  const NodeIDModifier = (event) => {
+    const updatedJobs=[...Jobs];
+
+    updatedJobs[SelectedJob].tree[SelectedNode].nodeID = event;
+    setJobs(updatedJobs);
+  }
+
   return (
     <div>
       <div class='titleFont'>Symbio.sys</div>
@@ -154,7 +177,10 @@ function App() {
           NodePlanModifier={NodePlanModifier}
           NodeCollaborationModifier={NodeCollaborationModifier}
           NodeCommunicationModifier={NodeCommunicationModifier}
-          NodeRiskModifier={NodeRiskModifier}></Node>
+          NodeRiskModifier={NodeRiskModifier}
+          NodeIDModifier={NodeIDModifier}
+          Hierarchy={Hierarchy}>
+          </Node>
       </div>
     </div>
   );
