@@ -6,7 +6,7 @@ import Node from './components/Node';
 import Job from './components/Job';
 
 function App() {
-  const [Jobs, setJobs] = useState([{id:1, title:'Ticket', tree:[ { id: 1, nodeID: [1,1], hierarchy: [1], subject: 'Root', objective: '', plan: '', communication: '', collaboration: '', risk: ''}]}
+  const [Jobs, setJobs] = useState([{id:1, title:'Ticket', tree:[ {nodeID: [1,1], hierarchy: [1], subject: 'Root', objective: '', plan: '', communication: '', collaboration: '', risk: ''}]}
  ]);
   const currentJob = 0;
   const [SelectedJob, setSelectedJob] = useState(0);
@@ -71,14 +71,17 @@ function App() {
 
   const NodeObjectiveModifier = (event) => {
     // const updatedNodeObjective = [...Jobs[SelectedJob].tree[SelectedNode], objective: event];
-
+    const index = Jobs[SelectedJob].tree.findIndex(node =>
+      node.nodeID.length === SelectedNode.length &&
+      node.nodeID.every((nodeID, index) => nodeID === SelectedNode[index])
+    );
     const updatedNodeObjective = [
-      ...Jobs[SelectedJob].tree.slice(0, SelectedNode), // Copy elements before the selected node
+      ...Jobs[SelectedJob].tree.slice(0, index), // Copy elements before the selected node
       {
-        ...Jobs[SelectedJob].tree[SelectedNode], // Copy the selected node
+        ...Jobs[SelectedJob].tree[index], // Copy the selected node
         objective: event, // Modify the 'objective' property
       },
-      ...Jobs[SelectedJob].tree.slice(SelectedNode + 1), // Copy elements after the selected node
+      ...Jobs[SelectedJob].tree.slice(index + 1), // Copy elements after the selected node
     ];
     
     const updatedJobs=[...Jobs];
@@ -87,13 +90,17 @@ function App() {
   }
 
   const NodePlanModifier = (event) => {
+    const index = Jobs[SelectedJob].tree.findIndex(node =>
+      node.nodeID.length === SelectedNode.length &&
+      node.nodeID.every((nodeID, index) => nodeID === SelectedNode[index])
+    );
     const updatedNodePlan = [
-      ...Jobs[SelectedJob].tree.slice(0, SelectedNode), // Copy elements before the selected node
+      ...Jobs[SelectedJob].tree.slice(0, index), // Copy elements before the selected node
       {
-        ...Jobs[SelectedJob].tree[SelectedNode], // Copy the selected node
+        ...Jobs[SelectedJob].tree[index], // Copy the selected node
         plan: event, // Modify the 'objective' property
       },
-      ...Jobs[SelectedJob].tree.slice(SelectedNode + 1), // Copy elements after the selected node
+      ...Jobs[SelectedJob].tree.slice(index + 1), // Copy elements after the selected node
     ];
     
     const updatedJobs=[...Jobs];
@@ -102,13 +109,17 @@ function App() {
   }
 
   const NodeCollaborationModifier = (event) => {
+    const index = Jobs[SelectedJob].tree.findIndex(node =>
+      node.nodeID.length === SelectedNode.length &&
+      node.nodeID.every((nodeID, index) => nodeID === SelectedNode[index])
+    );
     const updatedNodePlan = [
-      ...Jobs[SelectedJob].tree.slice(0, SelectedNode), // Copy elements before the selected node
+      ...Jobs[SelectedJob].tree.slice(0, index), // Copy elements before the selected node
       {
-        ...Jobs[SelectedJob].tree[SelectedNode], // Copy the selected node
+        ...Jobs[SelectedJob].tree[index], // Copy the selected node
         collaboration: event, // Modify the 'objective' property
       },
-      ...Jobs[SelectedJob].tree.slice(SelectedNode + 1), // Copy elements after the selected node
+      ...Jobs[SelectedJob].tree.slice(index + 1), // Copy elements after the selected node
     ];
     
     const updatedJobs=[...Jobs];
@@ -117,13 +128,17 @@ function App() {
   }
 
   const NodeCommunicationModifier = (event) => {
+    const index = Jobs[SelectedJob].tree.findIndex(node =>
+      node.nodeID.length === SelectedNode.length &&
+      node.nodeID.every((nodeID, index) => nodeID === SelectedNode[index])
+    );
     const updatedNodePlan = [
-      ...Jobs[SelectedJob].tree.slice(0, SelectedNode), // Copy elements before the selected node
+      ...Jobs[SelectedJob].tree.slice(0, index), // Copy elements before the selected node
       {
-        ...Jobs[SelectedJob].tree[SelectedNode], // Copy the selected node
+        ...Jobs[SelectedJob].tree[index], // Copy the selected node
         communication: event, // Modify the 'objective' property
       },
-      ...Jobs[SelectedJob].tree.slice(SelectedNode + 1), // Copy elements after the selected node
+      ...Jobs[SelectedJob].tree.slice(index + 1), // Copy elements after the selected node
     ];
     
     const updatedJobs=[...Jobs];
@@ -132,13 +147,17 @@ function App() {
   }
 
   const NodeRiskModifier = (event) => {
+    const index = Jobs[SelectedJob].tree.findIndex(node =>
+      node.nodeID.length === SelectedNode.length &&
+      node.nodeID.every((nodeID, index) => nodeID === SelectedNode[index])
+    );
     const updatedNodePlan = [
-      ...Jobs[SelectedJob].tree.slice(0, SelectedNode), // Copy elements before the selected node
+      ...Jobs[SelectedJob].tree.slice(0, index), // Copy elements before the selected node
       {
-        ...Jobs[SelectedJob].tree[SelectedNode], // Copy the selected node
+        ...Jobs[SelectedJob].tree[index], // Copy the selected node
         risk: event, // Modify the 'objective' property
       },
-      ...Jobs[SelectedJob].tree.slice(SelectedNode + 1), // Copy elements after the selected node
+      ...Jobs[SelectedJob].tree.slice(index + 1), // Copy elements after the selected node
     ];
     
     const updatedJobs=[...Jobs];
@@ -147,6 +166,10 @@ function App() {
   }
 
   const NodeIDModifier = (event) => {
+    const index = Jobs[SelectedJob].tree.findIndex(node =>
+      node.nodeID.length === SelectedNode.length &&
+      node.nodeID.every((nodeID, index) => nodeID === SelectedNode[index])
+    );
     const updatedJobs=[...Jobs];
 
     updatedJobs[SelectedJob].tree[SelectedNode].nodeID = event;

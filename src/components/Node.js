@@ -9,9 +9,16 @@ function Node(props) {
   const [PreviewID, setPreviewID] = useState(0);
   const [ScrollingUp, setScrollingUp] = useState(false);
 
+  let previewObject = [1,1];
   const handleMouseEnter = (id) => {
     setPreview(true);
-    setPreviewID(id - 1);
+    // setPreviewID(id - 1);
+    setPreviewID(id);
+    const previewObjectSetter = props.jobs[props.SelectedJob].tree.find(obj =>
+      obj.nodeID.length === id.length &&
+      obj.nodeID.every((nodeID, index) => nodeID === id[index])
+      );
+      previewObject = previewObjectSetter;
   };
 
   const handleMouseLeave = () => {
@@ -61,7 +68,7 @@ function Node(props) {
     const updatedHierarchy = [...props.Hierarchy, hierarchyLength+1];
     // const updatedHierarchy = [...targetHierarchy, hierarchyLength + 1];
     const updatedNodeID = [...updatedHierarchy, targetHierarchy.length + 1];
-    const newNode = {id:targetHierarchy.length + 1, subject:prompt('Enter a node subject'), hierarchy:props.Hierarchy, nodeID:updatedHierarchy};
+    const newNode = {subject:prompt('Enter a node subject'), hierarchy:props.Hierarchy, nodeID:updatedHierarchy};
     props.NodeModifier(newNode);
   }
 
@@ -217,7 +224,7 @@ function Node(props) {
         <div key={obj.id}
         className='box text'
         onMouseEnter={() => {
-          handleMouseEnter(obj.id);
+          handleMouseEnter(obj.nodeID);
         }}
         onMouseLeave={() => {
           handleMouseLeave();
@@ -233,7 +240,7 @@ function Node(props) {
       ))}
     </div>
 
-    {Preview && <div className="previewBox text">{props.jobs[props.SelectedJob].tree[PreviewID].subject}'s objective: {props.jobs[props.SelectedJob].tree[PreviewID].objective}</div>}
+    {Preview && <div className="previewBox text">{previewObject.subject}'s objective: {previewObject.objective}</div>}
 
 
     <div className="info">
@@ -241,7 +248,7 @@ function Node(props) {
         <div className="nodeInfoText">
           <div className="textSubHeader">Subject: {foundObject.subject}</div>
           <br />
-          <div className="textSubHeader">ID: {foundObject.id}</div>
+          <div className="textSubHeader">ID: {foundObject.nodeID}</div>
 
           <p className='textSubHeader'>Objective: {foundObject.objective}</p>
           <input
