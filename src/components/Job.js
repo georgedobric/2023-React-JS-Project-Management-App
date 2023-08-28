@@ -10,7 +10,8 @@ function Job(props) {
   }
 
   const handleAddJob = () => {
-    const newJob = {id:props.jobs.length + 1, title: prompt('Enter a job title'), tree:[ { id: 1, subject: 'Root' } ]};
+    // const newJob = {id:props.jobs.length + 1, title: prompt('Enter a job title'), tree:[ { id: 1, subject: 'Root' } ]};
+    const newJob = {id:props.jobs.length + 1, title:prompt('Enter a job title'), tree:[ {nodeID: [1,1], hierarchy: [1], subject: 'Root', objective: '', plan: '', communication: '', collaboration: '', risk: '' } ]};
     props.JobModifier(newJob);
   }
 

@@ -9,7 +9,7 @@ function Node(props) {
   const [PreviewID, setPreviewID] = useState(0);
   const [ScrollingUp, setScrollingUp] = useState(false);
 
-  let previewObject = [1,1];
+  const [previewObject, setPreviewObject] = useState(props.jobs[props.SelectedJob].tree[0]);
   const handleMouseEnter = (id) => {
     setPreview(true);
     // setPreviewID(id - 1);
@@ -18,7 +18,8 @@ function Node(props) {
       obj.nodeID.length === id.length &&
       obj.nodeID.every((nodeID, index) => nodeID === id[index])
       );
-      previewObject = previewObjectSetter;
+      // previewObject = previewObjectSetter;
+      setPreviewObject(previewObjectSetter);
   };
 
   const handleMouseLeave = () => {
