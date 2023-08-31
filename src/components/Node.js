@@ -8,6 +8,7 @@ function Node(props) {
   const [Preview, setPreview] = useState(false);
   const [PreviewID, setPreviewID] = useState(0);
   const [ScrollingUp, setScrollingUp] = useState(false);
+  const [ScrollingDown, setScrollingDown] = useState(false);
 
   const [previewObject, setPreviewObject] = useState(props.jobs[props.SelectedJob].tree[0]);
   const handleMouseEnter = (id) => {
@@ -143,7 +144,7 @@ function Node(props) {
 
   const handleAddNestedNode = () => {
     //assign the unique node identifier
-    setSelectedNodeTree([...props.jobs[props.SelectedJob].tree[props.SelectedNode].selectedNodeTree, 1]);
+    ////setSelectedNodeTree([...props.jobs[props.SelectedJob].tree[props.SelectedNode].selectedNodeTree, 1]);
 
     //so the above added number will be .length  but not of selected node rather of hierarchy, so hierarchy.length
     //setSelectedNodeTree([...props.jobs[props.SelectedJob].tree[props.SelectedNode].selectedNodeTree, props.jobs[props.SelectedJob].tree[props.SelectedNode].tree.length]);
@@ -160,23 +161,73 @@ function Node(props) {
     // const updatedSelectedNodeTree = [...SelectedNodeTree, props.SelectedNode];
     // props.NodeSelectedNodeTreeModifier(updatedSelectedNodeTree);
 
-    const newNode = {id:props.jobs[props.SelectedJob].tree.length+1, subject:prompt('Enter a node subject'), selectedNodeTree: SelectedNodeTree};
+    //// const newNode = {id:props.jobs[props.SelectedJob].tree.length+1, subject:prompt('Enter a node subject'), selectedNodeTree: SelectedNodeTree};
+    //// props.NodeModifier(newNode);
+    // handleNodeSelect(obj.nodeID);
+    // const targetHierarchy = Object.assign(foundObject.nodeID);
+    // targetHierarchy[targetHierarchy.length-1] += 1;
+    // const hierarchyLength = hierarchyLengthCounter(targetHierarchy);
+    // props.HierarchySetter(targetHierarchy);
+    // const updatedHierarchy = [...foundObject.nodeID, hierarchyLength+1];
+    // const updatedNodeID = [...updatedHierarchy, targetHierarchy.length + 1];
+    // const tempID = [...foundObject.nodeID, 1];
+    // const hierarchyLength = []
+    const newID = [...foundObject.nodeID, 1]; //second argument should be the length of the hierarchy
+    // or rather, it should only add a node if the hierarchy length is 0, and, in fact, that should be a button not immediate add maybe.
+    props.HierarchySetter(foundObject.nodeID);
+    const newHierarchy = [...foundObject.nodeID];
+    const newNode = {subject:prompt('Enter a node subject'), hierarchy:newHierarchy, nodeID:newID};
     props.NodeModifier(newNode);
   }
 
   const [HierarchyLevel, setHierarchyLevel] = useState(1);
 
-  const handleStepDown = (nodePreview, scrollUpStatus, nodeID) => {
-    if (nodePreview == true && scrollUpStatus == true) {
-      console.log('step down');
-      handleAddNestedNode();
-      if (nodePreview === true) {
-        const hLevel = HierarchyLevel + 1;
-        setHierarchyLevel(hLevel);
-        console.log("Hierarchy Level is: " + HierarchyLevel);
-        setPreview(false);
-      }
+  const handleHierarchyShift = (nodePreview, scrollUpStatus, nodeID, scrollDownStatus) => {
+//     if (nodePreview == true && scrollUpStatus == true) {
+//       console.log('step down');
+//       handleAddNestedNode();
+//       if (nodePreview === true) {
+//         const hLevel = HierarchyLevel + 1;
+//         setHierarchyLevel(hLevel);
+//         console.log("Hierarchy Level is: " + HierarchyLevel);
+//         setPreview(false);
+//       }
+//   }
+//   else if (nodePreview == true && scrollDownStatus == true) {
+//     console.log('step up');
+//     // handleAddNestedNode();
+//     const StepUpHierarchy = props.Hierarchy - 1;
+//     props.HierarchySetter(StepUpHierarchy);
+//     if (nodePreview === true) {
+//       // const hLevel = HierarchyLevel - 1;
+//       // setHierarchyLevel(hLevel);
+//       // console.log("Hierarchy Level is: " + HierarchyLevel);
+//       setPreview(false);
+//     }
+// }
+if (nodePreview == true && scrollUpStatus == true) {
+  console.log('step down');
+  handleNodeSelect(nodeID);
+  handleAddNestedNode();
+  if (nodePreview === true) {
+    const hLevel = HierarchyLevel + 1;
+    setHierarchyLevel(hLevel);
+    console.log("Hierarchy Level is: " + HierarchyLevel);
+    setPreview(false);
   }
+}
+else if (nodePreview == true && scrollDownStatus == true) {
+console.log('step up');
+// handleAddNestedNode();
+const StepUpHierarchy = props.Hierarchy - 1;
+props.HierarchySetter(StepUpHierarchy);
+if (nodePreview === true) {
+  // const hLevel = HierarchyLevel - 1;
+  // setHierarchyLevel(hLevel);
+  // console.log("Hierarchy Level is: " + HierarchyLevel);
+  setPreview(false);
+}
+}
 }
 
   //Handle scroll logic
@@ -185,9 +236,14 @@ function Node(props) {
     try {
     if (event.deltaY < 0) {
       setScrollingUp(true)
+      setScrollingDown(false);
     }
     else if (event.deltaY === 0) {
       // setScrollingUp(false);
+    }
+    else if (event.deltaY > 0) {
+      setScrollingDown(true);
+      setScrollingUp(false);
     }
   } catch (error) {
     // Code to handle the error
@@ -205,10 +261,36 @@ function Node(props) {
   //target the selected node for the node info display
   // const targetValue = 5;
 
-  const foundObject = props.jobs[props.SelectedJob].tree.find(obj =>
+  // const foundObject = props.jobs[props.SelectedJob].tree.find(obj =>
+  //   obj.nodeID.length === props.SelectedNode.length &&
+  //   obj.nodeID.every((nodeID, index) => nodeID === props.SelectedNode[index])
+  //   );
+  const [foundObject, setFoundObject] = useState(props.jobs[props.SelectedJob].tree[0]);
+  useEffect(()=>{
+  const foundObjectSetter = props.jobs[props.SelectedJob].tree.find(obj =>
     obj.nodeID.length === props.SelectedNode.length &&
     obj.nodeID.every((nodeID, index) => nodeID === props.SelectedNode[index])
     );
+    setFoundObject(foundObjectSetter);
+  }, [props.SelectedNode]);
+
+  //  const [displayedHierarchy, setDisplayedHierarchy] = useState([]);
+  // displayedHierarchySetter
+  // const displayedHierarchy = props.jobs[props.SelectedJob].tree.filter(obj =>
+  //   // obj.hierarchy.stringify === props.Hierarchy.stringify
+  //   [obj.hierarchy.every((hierarchy, index) => hierarchy.stringify === props.Hierarchy[index].stringify),
+  //   console.log(obj.subject + ' in hierarchy: ' + obj.hierarchy.stringify + ' and props index hier is: ' + props.Hierarchy.stringify)
+  // ]);
+
+  // const displayedHierarchy = props.jobs[props.SelectedJob].tree.filter(obj =>
+  //   obj.hierarchy.every((hierarchy, index) => hierarchy === props.Hierarchy[index])
+  // );
+  const displayedHierarchy = props.jobs[props.SelectedJob].tree
+    .filter(obj => obj.hierarchy.join('') === props.Hierarchy.join(''));
+  
+  console.log('-----------------------');
+  console.log('========The current Hierarcy is:' + props.Hierarchy +'========');
+  // setDisplayedHierarchy(displayedHierarchySetter);
 
   // if (foundObject) {
   //   console.log("Found object:", foundObject);
@@ -221,7 +303,7 @@ function Node(props) {
     <div>
     <div className='nodeWindowBorder'></div>
       <div className="nodeContainer" onClick={getMouseEventOptions}>
-      {props.JobSelectStatus && props.jobs[props.SelectedJob].tree.map((obj) => (
+      {props.JobSelectStatus && displayedHierarchy.map((obj) => (
         <div key={obj.id}
         className='box text'
         onMouseEnter={() => {
@@ -234,7 +316,7 @@ function Node(props) {
           handleNodeSelect(obj.nodeID);
         }}
         onWheel={() => {
-          handleStepDown(Preview, ScrollingUp, PreviewID);
+          handleHierarchyShift(Preview, ScrollingUp, PreviewID, ScrollingDown);
         }}>
           {obj.subject}
       </div>

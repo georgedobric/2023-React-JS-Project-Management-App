@@ -176,6 +176,10 @@ function App() {
     setJobs(updatedJobs);
   }
 
+  const HierarchySetter = (newHierarchy) => {
+    setHierarchy(newHierarchy);
+  }
+
   return (
     <div>
       <div class='titleFont'>Symbio.sys</div>
@@ -204,7 +208,8 @@ function App() {
           NodeCommunicationModifier={NodeCommunicationModifier}
           NodeRiskModifier={NodeRiskModifier}
           NodeIDModifier={NodeIDModifier}
-          Hierarchy={Hierarchy}>
+          Hierarchy={Hierarchy}
+          HierarchySetter={HierarchySetter}>
           </Node>
       </div>
     </div>
