@@ -25,6 +25,8 @@ function Node(props) {
 
   const handleMouseLeave = () => {
     setPreview(false);
+    setScrollingDown(false);
+    setScrollingUp(false);
   };
 
   //Count the hierarcy length, used to help for the nodeID of newly-added nodes.
@@ -140,7 +142,7 @@ function Node(props) {
       if (nodePreview === true) {
         setPreview(false);
       }
-    } else if (nodePreview == true && scrollDownStatus == true) {
+    } else if (nodePreview == true && scrollDownStatus == true && props.Hierarchy.length > 1) {
       console.log("step up");
       const StepUpHierarchy = props.Hierarchy.slice(0,-1);
       props.HierarchySetter(StepUpHierarchy);
