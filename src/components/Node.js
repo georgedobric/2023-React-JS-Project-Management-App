@@ -113,13 +113,17 @@ function Node(props) {
     // or rather, it should only add a node if the hierarchy length is 0, and, in fact, that should be a button not immediate add maybe.
     props.HierarchySetter(foundObject.nodeID);
     const newHierarchy = [...foundObject.nodeID];
-    const newNode = {
-      subject: prompt("Enter a node subject"),
-      hierarchy: newHierarchy,
-      nodeID: newID,
-    };
-    props.NodeModifier(newNode);
-    handleNodeSelect(newNode.nodeID);
+    const isNotNullSteppDownCheck = props.jobs[props.SelectedJob].tree.filter((obj) => obj.nodeID.join('') === newID.join(''));
+    if(isNotNullSteppDownCheck.length<1) {
+      const newNode = {
+        subject: prompt("Enter a node subject"),
+        hierarchy: newHierarchy,
+        nodeID: newID,
+      };
+      props.NodeModifier(newNode);
+      handleNodeSelect(newNode.nodeID);
+    }
+    handleNodeSelect(newID);
   };
 
   //Change the hierarchy value upon the user 'stepping' down or up form a parent node to a child node, or vice versa, respectively.
