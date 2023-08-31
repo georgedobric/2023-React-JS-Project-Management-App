@@ -119,6 +119,7 @@ function Node(props) {
       nodeID: newID,
     };
     props.NodeModifier(newNode);
+    handleNodeSelect(newNode.nodeID);
   };
 
   //Change the hierarchy value upon the user 'stepping' down or up form a parent node to a child node, or vice versa, respectively.
@@ -183,6 +184,17 @@ function Node(props) {
     );
     setFoundObject(foundObjectSetter);
   }, [props.SelectedNode]);
+
+  const updateFoundObject = () => {
+    const foundObjectSetter = props.jobs[props.SelectedJob].tree.find(
+      (obj) =>
+        obj.nodeID.length === props.SelectedNode.length &&
+        obj.nodeID.every(
+          (nodeID, index) => nodeID === props.SelectedNode[index]
+        )
+    );
+    setFoundObject(foundObjectSetter);
+  };
 
   //Filter through the user-selected job, storing elements that are in the user's current hierarchy. Used for displaying nodes.
   const displayedHierarchy = props.jobs[props.SelectedJob].tree.filter(
@@ -297,6 +309,7 @@ function Node(props) {
           handleCollaborationUpdate(userInputCollaboration);
           handleCommunicationUpdate(userInputCommunication);
           handleRiskUpdate(userInputRisk);
+          updateFoundObject();
         }}
       >
         Update Node
