@@ -138,8 +138,11 @@ function Node(props) {
       }
     } else if (nodePreview == true && scrollDownStatus == true) {
       console.log("step up");
-      const StepUpHierarchy = props.Hierarchy - 1;
+      const StepUpHierarchy = props.Hierarchy.slice(0,-1);
       props.HierarchySetter(StepUpHierarchy);
+      const stepUpDefaultNodeSelect = [...StepUpHierarchy, 1];
+      props.NodeSelector(stepUpDefaultNodeSelect);
+      updateFoundObject();
       if (nodePreview === true) {
         setPreview(false);
       }
