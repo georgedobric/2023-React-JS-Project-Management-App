@@ -217,45 +217,14 @@ function Node(props) {
 
   return (
     <div>
-      <div className="nodeWindowBorder"></div>
-      <div className="nodeContainer" onClick={getMouseEventOptions}>
-        {props.JobSelectStatus &&
-          displayedHierarchy.map((obj) => (
-            <div
-              key={obj.id}
-              className="box text"
-              onMouseEnter={() => {
-                handleMouseEnter(obj.nodeID);
-              }}
-              onMouseLeave={() => {
-                handleMouseLeave();
-              }}
-              onClick={() => {
-                handleNodeSelect(obj.nodeID);
-              }}
-              onWheel={() => {
-                handleHierarchyShift(
-                  Preview,
-                  ScrollingUp,
-                  PreviewID,
-                  ScrollingDown
-                );
-              }}
-            >
-              {obj.subject}
-            </div>
-          ))}
-      </div>
 
-      {Preview && (
-        <div className="previewBox text">
-          {previewObject.subject}'s objective: {previewObject.objective}
-        </div>
-      )}
 
-      <div className="info">
-        <div className="textHeader">Node Info</div>
-        <div className="nodeInfoText">
+      
+
+<div class="h-full">
+      <div class=" z-50 opacity-80 bg-grey-300 fixed w-full h-1/3 mx-auto border-4 bg-green-300 border-gray-800 p-3 top-16 right-0 rounded-lg overflow-auto">
+        <div className="text-xl text-white font-bold fixed top-20 text-center w-full underline">Node Info</div>
+        <div class="z-0">
           <div className="textSubHeader">Subject: {foundObject.subject}</div>
           <br />
           <div className="textSubHeader">ID: {foundObject.nodeID}</div>
@@ -305,13 +274,48 @@ function Node(props) {
             placeholder="Enter possible risks: Are there any potential risks that I can foresee at this point in time?"
           />
         </div>
+
+        </div>
+
+
+        <div class="z-50  bg-yellow-300 border-4 border-blue-300 rounded-xl fixed h-1/2 w-5/12 top-1/2 right-5 overflow-auto overflow-nowrap flex flex-col" onClick={getMouseEventOptions}>
+        {props.JobSelectStatus &&
+          displayedHierarchy.map((obj) => (
+            <div
+              key={obj.id}
+              className="text-white text-center h-min whitespace-nowrap bg-blue-400 border-4 border-pink-300 p-3 rounded-full w-2/3 mx-auto mb-2 top-1  relative"
+              onMouseEnter={() => {
+                handleMouseEnter(obj.nodeID);
+              }}
+              onMouseLeave={() => {
+                handleMouseLeave();
+              }}
+              onClick={() => {
+                handleNodeSelect(obj.nodeID);
+              }}
+              onWheel={() => {
+                handleHierarchyShift(
+                  Preview,
+                  ScrollingUp,
+                  PreviewID,
+                  ScrollingDown
+                );
+              }}
+            >
+              {obj.subject}
+            </div>
+          ))}
       </div>
 
-      <button className="addNodeBox" onClick={handleAddNode}>
-        Add Node
+
+
+
+      </div>
+      <button className="z-50 animate-bounce p-4 w-1/12 bg-red-300 rounded-full border-4 border-black fixed bottom-80 right-2" onClick={handleAddNode}>
+      ➕
       </button>
       <button
-        className="updateNodeBox"
+        className="z-50 animate-bounce bg-red-300 border-4 border-black text-white text-center top-20 fixed rounded-full right-10 p-4"
         onClick={() => {
           handleObjectiveUpdate(userInput);
           handlePlanUpdate(userInputPlan);
@@ -323,6 +327,13 @@ function Node(props) {
       >
         Update Node
       </button>
+
+      {Preview && (
+        <div className="z-50 fixed bg-green-300 border-4 border-blue-300 rounded-full top-2/3 right-80">
+          {previewObject.subject}'s objective: {previewObject.objective}
+        </div>
+      )}
+
     </div>
   );
 }

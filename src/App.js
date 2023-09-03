@@ -1,9 +1,11 @@
 import logo from "./logo.svg";
-import "./App.css";
+// import "./App.css";
 import "./components/Node.js";
+import "./index.css";
 import React, { useState, useEffect } from "react";
 import Node from "./components/Node";
 import Job from "./components/Job";
+import "./output.css";
 /************************************   Author   *********************************************
  * Created by: George Dobric                                                                 *
 /**********************************   Description   ******************************************
@@ -190,12 +192,35 @@ function App() {
     setHierarchy(newHierarchy);
   };
 
+  const [InfoPreviewStatus, setInfoPreviewStatus] = useState(false);
+  const infoPreviewHandler = (status) => {
+    setInfoPreviewStatus(status);
+  }
+
+
+  //Input handlers
+  const [userInput, setUserInput] = useState("");
+  const handleSearch = (event) => {
+    setUserInput(event.target.value);
+  };
+
   return (
     <div>
-      <div class="titleFont">Symbio.sys</div>
+    <div class="fixed mx-auto w-1/4  bg-purple-400 border-4 border-black z-50 text-center text-black rounded-full top-1" onMouseEnter={() => infoPreviewHandler(true)} onMouseLeave={() => infoPreviewHandler(false)}>Project Management Tool - hover here for info</div>
+      {InfoPreviewStatus && (
+      <div class='fixed z-50 text-yellow-200 text-center rounded-lg w-1/4 bg-gray-500 bg-transparent left-1/4 animate-pulse'>To enter a node, hover your cursor over it and scroll up.
+           To exit a node, hover your cursor over any node and scroll down.
+      </div>
+      )}
+      <input
+            type="Search"
+            value={userInput}
+            onChange={handleSearch}
+            class="bg-green-300 text-black bold mx-auto rounded-full border-4 border-black ml-56 w-1/2 text-center"
+            placeholder="Search through your jobs and nodes..."
+          />
       <br></br>
-      <div class="jobBar">
-        <div class="jobFont">Jobs</div>
+      <div>
         <Job
           jobs={Jobs}
           JobSelector={JobSelector}
@@ -205,10 +230,15 @@ function App() {
           JobModifier={JobModifier}
         ></Job>
       </div>
+
+      <div class="z-50 bg-green-400 border-4 border-black w-1/4 left-5 rounded-full relative top-80">
+        <div class="font-bold font-sans text-lg order-1 text-center text-black p-1 ">Jobs</div>
+        </div>
+
       <br></br>
-      <div class="nodeBar">
-        <div class="nodeFont">Nodes</div>
-        <Node
+      <div class="h-full">
+      
+        <Node class="z-0"
           jobs={Jobs}
           SelectedJob={SelectedJob}
           JobSelectStatus={JobSelectStatus}
@@ -225,7 +255,15 @@ function App() {
           HierarchySetter={HierarchySetter}
         ></Node>
       </div>
+      <div class="z-50 bg-green-300 p-3 rounded-full left-96 bottom-40 fixed border-4 border-purple-300 w-1/12 text-center text-2xl">
+      🖐️</div>
+      <div class="z-50 animate-ping bg-green-300 p-3 rounded-full left-96 bottom-40 fixed border-4 border-purple-300 w-1/12 text-center text-2xl">
+      🖐️</div>
+      <div class="z-50 bg-green-400 border-4 border-black w-1/4 mt-1/2 rounded-full right-36 text-center fixed content-center top-80">
+        <div class=" font-bold font-sans text-lg order-1 text-black flex relative p-1 mx-16">Nodes</div>
+        </div>
     </div>
+    
   );
 }
 

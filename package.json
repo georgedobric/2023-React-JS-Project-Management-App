@@ -13,6 +13,7 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
+    "watch": "npx tailwindcss -i ./src/input.css -o ./src/output.css --watch ",
     "start": "craco start",
     "build": "craco build",
     "test": "craco test",
@@ -37,9 +38,10 @@
     ]
   },
   "devDependencies": {
-    "postcss": "^8.4.28",
+    "autoprefixer": "^10.4.15",
+    "postcss": "^8.4.29",
     "prettier": "^3.0.2",
     "prettier-plugin-tailwindcss": "^0.5.3",
-    "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.2.17"
+    "tailwindcss": "^2.2.19"
   }
 }
