@@ -223,7 +223,7 @@ function Node(props) {
 
 <div class="h-full">
       <div class=" z-50 opacity-80 bg-grey-300 fixed w-full h-1/3 mx-auto border-4 bg-green-300 border-gray-800 p-3 top-16 right-0 rounded-lg overflow-auto">
-        <div className="text-xl text-white font-bold fixed top-20 text-center w-full underline">Node Info</div>
+        <div class="text-xl text-white font-bold fixed top-20 text-center w-full underline">Node Info</div>
         <div class="z-0">
           <div className="textSubHeader">Subject: {foundObject.subject}</div>
           <br />
@@ -278,7 +278,7 @@ function Node(props) {
         </div>
 
 
-        <div class="z-50  bg-yellow-300 border-4 border-blue-300 rounded-xl fixed h-1/2 w-5/12 top-1/2 right-5 overflow-auto overflow-nowrap flex flex-col" onClick={getMouseEventOptions}>
+        <div class="z-50  bg-yellow-300 border-4 border-blue-300 rounded-xl  h-1/2 w-5/12 top-1/2 right-5 overflow-auto overflow-nowrap flex flex-col fixed" onClick={getMouseEventOptions}>
         {props.JobSelectStatus &&
           displayedHierarchy.map((obj) => (
             <div
@@ -311,11 +311,11 @@ function Node(props) {
 
 
       </div>
-      <button className="z-50 animate-bounce p-4 w-1/12 bg-red-300 rounded-full border-4 border-black fixed bottom-80 right-2" onClick={handleAddNode}>
+      <button class="z-50 animate-bounce p-4 w-1/12 bg-red-300 rounded-full border-4 border-black absolute bottom-1/4 right-2" onClick={handleAddNode}>
       ➕
       </button>
       <button
-        className="z-50 animate-bounce bg-red-300 border-4 border-black text-white text-center top-20 fixed rounded-full right-10 p-4"
+        class="z-50 animate-bounce bg-red-300 border-4 border-black text-white text-center top-20 fixed rounded-full right-10 p-4"
         onClick={() => {
           handleObjectiveUpdate(userInput);
           handlePlanUpdate(userInputPlan);
@@ -329,7 +329,7 @@ function Node(props) {
       </button>
 
       {Preview && (
-        <div className="z-50 fixed bg-green-300 border-4 border-blue-300 rounded-full top-2/3 right-80">
+        <div class="z-50 fixed bg-green-300 border-4 border-blue-300 rounded-full top-2/3 right-80">
           {previewObject.subject}'s objective: {previewObject.objective}
         </div>
       )}

@@ -231,7 +231,7 @@ function App() {
         ></Job>
       </div>
 
-      <div class="z-50 bg-green-400 border-4 border-black w-1/4 left-5 rounded-full relative top-80">
+      <div class="z-50 bg-green-400 border-4 border-black w-1/4 left-1/4 rounded-full absolute top-1/2">
         <div class="font-bold font-sans text-lg order-1 text-center text-black p-1 ">Jobs</div>
         </div>
 
@@ -255,12 +255,12 @@ function App() {
           HierarchySetter={HierarchySetter}
         ></Node>
       </div>
-      <div class="z-50 bg-green-300 p-3 rounded-full left-96 bottom-40 fixed border-4 border-purple-300 w-1/12 text-center text-2xl">
+      <div class="z-50 bg-green-300 p-3 rounded-full left-1/2 bottom-1/4 absolute border-4 border-purple-300 w-1/12 text-center text-2xl">
       🖐️</div>
-      <div class="z-50 animate-ping bg-green-300 p-3 rounded-full left-96 bottom-40 fixed border-4 border-purple-300 w-1/12 text-center text-2xl">
+      <div class="z-50 animate-ping bg-green-300 p-3 rounded-full left-1/2 bottom-1/4 absolute border-4 border-purple-300 w-1/12 text-center text-2xl">
       🖐️</div>
-      <div class="z-50 bg-green-400 border-4 border-black w-1/4 mt-1/2 rounded-full right-36 text-center fixed content-center top-80">
-        <div class=" font-bold font-sans text-lg order-1 text-black flex relative p-1 mx-16">Nodes</div>
+      <div class="z-50 bg-green-400 border-4 border-black w-1/4 mt-1/2 rounded-full right-1/4 text-center absolute content-center top-1/2">
+        <div class=" font-bold font-sans text-lg order-1 text-black flex relative p-1 left-1/4">Nodes</div>
         </div>
     </div>
     
