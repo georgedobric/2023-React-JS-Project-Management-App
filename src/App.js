@@ -43,6 +43,7 @@ function App() {
   const [Hierarchy, setHierarchy] = useState([1]);
   const [JobSelectStatus, setJobSelectStatus] = useState(false);
   const [NoJobSelection, setNoJobSelection] = useState(true);
+  const [stepDownAfterNodeSelect, setStepDownAfterNodeSelect] = useState(false);
 
   //Store the user's selected job.
   const JobSelector = (id) => {
@@ -58,11 +59,15 @@ function App() {
     setJobs(updatedJob);
   };
 
+  const handleStepDownAfterNodeSelect = (state) => {
+    setStepDownAfterNodeSelect(state);
+  }
+
   //Store the user's selected node, passing the node's nodeID.
   const NodeSelector = (id) => {
     let updatedNodeSelect = id;
     setSelectedNode(updatedNodeSelect);
-    console.log("The selected job is: ", SelectedNode);
+    return(SelectedNode);
   };
 
   //Add new nodes entered by the user to the current job.
@@ -253,11 +258,11 @@ function App() {
           NodeIDModifier={NodeIDModifier}
           Hierarchy={Hierarchy}
           HierarchySetter={HierarchySetter}
+          stepDownAfterNodeSelect={stepDownAfterNodeSelect}
+          handleStepDownAfterNodeSelect={handleStepDownAfterNodeSelect}
         ></Node>
       </div>
       <div class="z-50 bg-green-300 p-3 rounded-full left-1/2 bottom-1/4 absolute border-4 border-purple-300 w-1/12 text-center text-2xl">
-      🖐️</div>
-      <div class="z-50 animate-ping bg-green-300 p-3 rounded-full left-1/2 bottom-1/4 absolute border-4 border-purple-300 w-1/12 text-center text-2xl">
       🖐️</div>
       <div class="z-50 bg-green-400 border-4 border-black w-1/4 mt-1/2 rounded-full right-1/4 text-center absolute content-center top-1/2">
         <div class=" font-bold font-sans text-lg order-1 text-black flex relative p-1 left-1/4">Nodes</div>

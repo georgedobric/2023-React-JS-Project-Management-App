@@ -111,10 +111,9 @@ function Node(props) {
 
   //Called when the user scrolls up while previewing a node. Prompts the user to enter a child node.
   const handleAddNestedNode = () => {
-    const newID = [...foundObject.nodeID, 1]; //second argument should be the length of the hierarchy
-    // or rather, it should only add a node if the hierarchy length is 0, and, in fact, that should be a button not immediate add maybe.
-    props.HierarchySetter(foundObject.nodeID);
-    const newHierarchy = [...foundObject.nodeID];
+    const newID = [...previewObject.nodeID, 1];
+    props.HierarchySetter(previewObject.nodeID);
+    const newHierarchy = [...previewObject.nodeID];
     const isNotNullSteppDownCheck = props.jobs[props.SelectedJob].tree.filter((obj) => obj.nodeID.join('') === newID.join(''));
     if(isNotNullSteppDownCheck.length<1) {
       const newNode = {
@@ -127,14 +126,14 @@ function Node(props) {
     }
     handleNodeSelect(newID);
   };
-
+  
   //Change the hierarchy value upon the user 'stepping' down or up form a parent node to a child node, or vice versa, respectively.
-  const handleHierarchyShift = (
+  async function handleHierarchyShift (
     nodePreview,
     scrollUpStatus,
     nodeID,
     scrollDownStatus
-  ) => {
+  ) {
     if (nodePreview == true && scrollUpStatus == true) {
       console.log("step down");
       handleNodeSelect(nodeID);
@@ -311,11 +310,11 @@ function Node(props) {
 
 
       </div>
-      <button class="z-50 animate-bounce p-4 w-1/12 bg-red-300 rounded-full border-4 border-black absolute bottom-1/4 right-2" onClick={handleAddNode}>
+      <button class="z-50 p-4 w-1/12 bg-red-300 rounded-full border-4 border-black absolute bottom-1/4 right-2" onClick={handleAddNode}>
       ➕
       </button>
       <button
-        class="z-50 animate-bounce bg-red-300 border-4 border-black text-white text-center top-20 fixed rounded-full right-10 p-4"
+        class="z-50 bg-red-300 border-4 border-black text-white text-center top-20 fixed rounded-full right-10 p-4"
         onClick={() => {
           handleObjectiveUpdate(userInput);
           handlePlanUpdate(userInputPlan);
