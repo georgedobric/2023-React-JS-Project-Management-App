@@ -6,6 +6,7 @@ import React, { useState, useEffect } from "react";
 import Node from "./components/Node";
 import Job from "./components/Job";
 import "./output.css";
+import { motion } from "framer-motion";
 /************************************   Author   *********************************************
  * Created by: George Dobric                                                                 *
 /**********************************   Description   ******************************************
@@ -61,13 +62,13 @@ function App() {
 
   const handleStepDownAfterNodeSelect = (state) => {
     setStepDownAfterNodeSelect(state);
-  }
+  };
 
   //Store the user's selected node, passing the node's nodeID.
   const NodeSelector = (id) => {
     let updatedNodeSelect = id;
     setSelectedNode(updatedNodeSelect);
-    return(SelectedNode);
+    return SelectedNode;
   };
 
   //Add new nodes entered by the user to the current job.
@@ -200,8 +201,7 @@ function App() {
   const [InfoPreviewStatus, setInfoPreviewStatus] = useState(false);
   const infoPreviewHandler = (status) => {
     setInfoPreviewStatus(status);
-  }
-
+  };
 
   //Input handlers
   const [userInput, setUserInput] = useState("");
@@ -211,19 +211,26 @@ function App() {
 
   return (
     <div>
-    <div class="fixed mx-auto w-1/4  bg-purple-400 border-4 border-black z-50 text-center text-black rounded-full top-1" onMouseEnter={() => infoPreviewHandler(true)} onMouseLeave={() => infoPreviewHandler(false)}>Project Management Tool - hover here for info</div>
-      {InfoPreviewStatus && (
-      <div class='fixed z-50 text-yellow-200 text-center rounded-lg w-1/4 bg-gray-500 bg-transparent left-1/4 animate-pulse'>To enter a node, hover your cursor over it and scroll up.
-           To exit a node, hover your cursor over any node and scroll down.
+      <div
+        class="fixed mx-auto w-1/4  bg-purple-400 border-4 border-black z-50 text-center text-black rounded-full top-1"
+        onMouseEnter={() => infoPreviewHandler(true)}
+        onMouseLeave={() => infoPreviewHandler(false)}
+      >
+        Project Management Tool - hover here for info
       </div>
+      {InfoPreviewStatus && (
+        <div class="fixed z-50 text-yellow-200 text-center rounded-lg w-1/4 bg-gray-500 bg-transparent left-1/4 animate-pulse">
+          To enter a node, hover your cursor over it and scroll up. To exit a
+          node, hover your cursor over any node and scroll down.
+        </div>
       )}
       <input
-            type="Search"
-            value={userInput}
-            onChange={handleSearch}
-            class="bg-green-300 text-black bold mx-auto rounded-full border-4 border-black ml-56 w-1/2 text-center"
-            placeholder="Search through your jobs and nodes..."
-          />
+        type="Search"
+        value={userInput}
+        onChange={handleSearch}
+        class="bg-green-300 text-black bold mx-auto rounded-full border-4 border-black ml-56 w-1/2 text-center"
+        placeholder="Search through your jobs and nodes..."
+      />
       <br></br>
       <div>
         <Job
@@ -237,13 +244,15 @@ function App() {
       </div>
 
       <div class="z-50 bg-green-400 border-4 border-black w-1/4 left-1/4 rounded-full absolute top-1/2">
-        <div class="font-bold font-sans text-lg order-1 text-center text-black p-1 ">Jobs</div>
+        <div class="font-bold font-sans text-lg order-1 text-center text-black p-1 ">
+          Jobs
         </div>
+      </div>
 
       <br></br>
       <div class="h-full">
-      
-        <Node class="z-0"
+        <Node
+          class="z-0"
           jobs={Jobs}
           SelectedJob={SelectedJob}
           JobSelectStatus={JobSelectStatus}
@@ -263,12 +272,14 @@ function App() {
         ></Node>
       </div>
       <div class="z-50 bg-green-300 p-3 rounded-full left-1/2 bottom-1/4 absolute border-4 border-purple-300 w-1/12 text-center text-2xl">
-      🖐️</div>
+        🖐️
+      </div>
       <div class="z-50 bg-green-400 border-4 border-black w-1/4 mt-1/2 rounded-full right-1/4 text-center absolute content-center top-1/2">
-        <div class=" font-bold font-sans text-lg order-1 text-black flex relative p-1 left-1/4">Nodes</div>
+        <div class=" font-bold font-sans text-lg order-1 text-black flex relative p-1 left-1/4">
+          Nodes
         </div>
+      </div>
     </div>
-    
   );
 }
 
