@@ -11,6 +11,7 @@ function Node(props) {
   const [previewObject, setPreviewObject] = useState(
     props.jobs[props.SelectedJob].tree[0]
   );
+  const [addNodeClickStatus, setAddNodeClickStatus] = useState();
 
   //Let the user preview nodes with a mouse hover.
   const handleMouseEnter = (id) => {
@@ -43,6 +44,13 @@ function Node(props) {
     return count;
   };
 
+  const handleAddNodeClick = () => {
+    setAddNodeClickStatus(true);
+    setTimeout(() => {
+      handleAddNode();
+      setAddNodeClickStatus(false);
+    }, 200)
+  }
   //Add a new node to the selected job & selected hierarchy.
   const handleAddNode = () => {
     const targetHierarchy = foundObject.nodeID.slice(0, -1);
@@ -314,14 +322,12 @@ function Node(props) {
             ))}
         </div>
       </div>
-      <motion.button
-        whileHover={{ scale: 1.1 }}
-        whileTap={{ scale: 0.9 }}
-        class="z-50 p-4 w-1/12 bg-red-300 rounded-full border-4 border-black absolute bottom-1/4 right-2"
-        onClick={handleAddNode}
+      <button
+        class={addNodeClickStatus ? 'bg-purple-300 z-50 p-4 w-1/5 rounded-full border-4 border-black absolute bottom-1/2 right-2 transform transition-transform duration-300 hover:scale-90' : 'bg-red-300 hover:bg-purple-300 z-50 p-4 w-1/5 rounded-full border-4 border-black absolute bottom-1/2 right-2 transform transition-transform duration-300 hover:scale-105'}
+        onClick={handleAddNodeClick}
       >
         ➕
-      </motion.button>
+      </button>
       <motion.button
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.9 }}
