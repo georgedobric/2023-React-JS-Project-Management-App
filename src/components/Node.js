@@ -69,6 +69,8 @@ function Node(props) {
   //Store the user's selected node by passing in the nodeID.
   const handleNodeSelect = (id) => {
     props.NodeSelector(id);
+    // nodeInfoHierarchyDisplay(props.SelectedNode);
+    nodeInfoHierarchyDisplay();
   };
 
   //Input Handlers:
@@ -229,14 +231,83 @@ function Node(props) {
     "========The current Hierarcy is:" + props.Hierarchy + "========"
   );
 
+  //display the node hierarchy in node info
+  //Filter through the user-selected job, storing elements that are parents of the user-selected node, including the selected node. Used for the nodeID display.
+  const displayedAncestors = props.SelectedNode !== undefined ? [props.jobs[props.SelectedJob].tree[0]] : [props.jobs[0].tree[0]];
+  // let ancestorID = displayedAncestors !== undefined ? displayedAncestors.nodeID : [1,1];
+  let ancestorID = foundObject !== undefined && foundObject.hierarchy.length >= 2 ? [...foundObject.hierarchy] : [1,1];
+
+  const nodeInfoHierarchyDisplay = () => {
+    if (ancestorID.length >= 2){
+    for (let i = 0; i < ancestorID.length; i++) {
+      displayedAncestors.push(props.jobs[props.SelectedJob].tree.find(
+        (obj) => obj.nodeID.join("") === ancestorID.join("")
+      ));
+      ancestorID.pop();
+    }
+  }
+  }
+  // nodeInfoHierarchyDisplay(props.SelectedNode);
+  nodeInfoHierarchyDisplay();
+
+  // function nodeInfoHierarchyDisplay(nodeID) {
+  //   ancestorID.pop();
+  //   const parent = props.jobs[props.SelectedJob].tree[ancestorID];
+  //   displayedAncestors.push(parent);
+  //   return function () {
+  //     return nodeID.slice();
+  //   };
+  // }
+  
+  // const myArray = [1, 2, 3, 4, 5];
+  // const removeLast = sliceAndRemoveLast(myArray);
+  
+  // console.log(myArray); // This will log [1, 2, 3, 4, 5], preserving the original state.
+  
+  // const newArray = removeLast();
+  // console.log(newArray); // This will log [1, 2, 3, 4], as it's the result of calling the returned function.
+  
+
   return (
     <div>
       <div class="h-full">
-        <div class=" z-50 opacity-80 bg-grey-300 fixed w-full h-1/3 mx-auto border-4 bg-green-300 border-gray-800 p-3 top-16 right-0 rounded-lg overflow-auto">
-          <div class="text-xl text-white font-bold fixed top-20 text-center w-full underline">
+        <div class=" z-50 grid grid-cols-2 grid-auto-rows gap-4 opacity-80 bg-grey-300 fixed w-full h-1/3 mx-auto border-4 bg-green-300 border-gray-800 p-3 top-16 right-0 rounded-lg overflow-auto">
+          <div class="text-xl text-white font-bold fixed top-20 text-center w-full underline row-start-1">
             Node Info
           </div>
-          <div class="z-0">
+          <div class="row-start-2 col-start-2 fixed w-full text-right text-white text-lg p-11 font-serif font-bold">
+          <div>Selected Node Hierarchy</div>
+          
+          {foundObject.nodeID.length >= 2 && displayedAncestors.map((obj) => (
+              <motion.button
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.9 }}
+                // key={obj.id}
+                className="text-white text-center h-min whitespace-nowrap bg-blue-400 border-4 border-pink-300 p-3 rounded-full w-2/3 mx-auto mb-2 top-1  relative"
+                // onMouseEnter={() => {
+                //   handleMouseEnter(obj.nodeID);
+                // }}
+                // onMouseLeave={() => {
+                //   handleMouseLeave();
+                // }}
+                // onClick={() => {
+                //   handleNodeSelect(obj.nodeID);
+                // }}
+                // onWheel={() => {
+                //   handleHierarchyShift(
+                //     Preview,
+                //     ScrollingUp,
+                //     PreviewID,
+                //     ScrollingDown
+                //   );
+                // }}
+              >
+                {obj.subject}
+              </motion.button>
+              ))}
+            </div>
+
+          <div class="z-0 row-start-2 col-start-1">
             <div className="textSubHeader">Subject: {foundObject.subject}</div>
             <br />
             <div className="textSubHeader">ID: {foundObject.nodeID}</div>
@@ -285,6 +356,9 @@ function Node(props) {
               className="nodeInfoInput"
               placeholder="Enter possible risks: Are there any potential risks that I can foresee at this point in time?"
             />
+          </div>
+          <div class="row-start-4 col-start-2">
+          <div className="textSubHeader">Selected Node Hierarchy</div>
           </div>
         </div>
 
