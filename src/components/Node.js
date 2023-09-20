@@ -74,9 +74,9 @@ function Node(props) {
   };
 
   //Input Handlers:
-  const [userInput, setUserInput] = useState("");
+  const [userInputObjective, setUserInputObjective] = useState("");
   const handleNodeObjective = (event) => {
-    setUserInput(event.target.value);
+    setUserInputObjective(event.target.value);
   };
 
   const [userInputPlan, setUserInputPlan] = useState("");
@@ -99,6 +99,14 @@ function Node(props) {
     setUserInputRisk(event.target.value);
   };
 
+  function clearInput () {
+    setUserInputObjective('');
+    setUserInputPlan('');
+    setUserInputCollaboration('');
+    setUserInputCommunication('');
+    setUserInputRisk('');
+  };
+
   //Update Handlers:
   const handleObjectiveUpdate = (objective) => {
     props.NodeObjectiveModifier(objective);
@@ -118,6 +126,7 @@ function Node(props) {
 
   const handleRiskUpdate = (objective) => {
     props.NodeRiskModifier(objective);
+    clearInput();
   };
 
   //Called when the user scrolls up while previewing a node. Prompts the user to enter a child node.
@@ -315,7 +324,7 @@ function Node(props) {
             <p className="textSubHeader">Objective: {foundObject.objective}</p>
             <input
               type="Objective"
-              value={userInput}
+              value={userInputObjective}
               onChange={handleNodeObjective}
               className="nodeInfoInput"
               placeholder="Enter the objective, what do you aim to achieve here?"
@@ -407,7 +416,7 @@ function Node(props) {
         whileTap={{ scale: 0.9 }}
         class="z-50 bg-red-300 border-4 border-black text-white text-center top-20 fixed rounded-full right-10 p-4"
         onClick={() => {
-          handleObjectiveUpdate(userInput);
+          handleObjectiveUpdate(userInputObjective);
           handlePlanUpdate(userInputPlan);
           handleCollaborationUpdate(userInputCollaboration);
           handleCommunicationUpdate(userInputCommunication);
