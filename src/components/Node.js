@@ -284,7 +284,7 @@ function Node(props) {
           <div class="text-xl text-white font-bold fixed top-20 text-center w-full underline row-start-1">
             Node Info
           </div>
-          <div class="row-start-2 col-start-2 fixed w-full text-right text-white text-lg p-11 font-serif font-bold">
+          <div class="row-start-2 col-start-2  w-full text-right text-white text-lg p-11 font-serif font-bold">
           <div>Selected Node Hierarchy</div>
           
           {foundObject.nodeID.length >= 2 && displayedAncestors.map((obj) => (
@@ -292,7 +292,8 @@ function Node(props) {
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.9 }}
                 // key={obj.id}
-                className="text-white text-center h-min whitespace-nowrap bg-blue-400 border-4 border-pink-300 p-3 rounded-full w-2/3 mx-auto mb-2 top-1  relative"
+                class="bg-blue-400 text-white text-center border-4 border-pink-300 rounded-full w-2/3"
+                //className="text-white text-center h-min whitespace-nowrap bg-blue-400 border-4 border-pink-300 p-3 rounded-full w-2/3 mx-auto mb-2 top-1  relative"
                 // onMouseEnter={() => {
                 //   handleMouseEnter(obj.nodeID);
                 // }}
@@ -365,9 +366,6 @@ function Node(props) {
               className="nodeInfoInput"
               placeholder="Enter possible risks: Are there any potential risks that I can foresee at this point in time?"
             />
-          </div>
-          <div class="row-start-4 col-start-2">
-          <div className="textSubHeader">Selected Node Hierarchy</div>
           </div>
         </div>
 
