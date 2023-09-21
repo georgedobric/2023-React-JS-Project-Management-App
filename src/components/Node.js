@@ -249,9 +249,19 @@ function Node(props) {
   const nodeInfoHierarchyDisplay = () => {
     if (ancestorID.length >= 2){
     for (let i = 0; i < ancestorID.length; i++) {
+      if (ancestorID.length >=3){
       displayedAncestors.push(props.jobs[props.SelectedJob].tree.find(
         (obj) => obj.nodeID.join("") === ancestorID.join("")
       ));
+    }
+
+    else if (ancestorID.length ==2){
+      displayedAncestors.push(props.jobs[props.SelectedJob].tree.find(
+        (obj) => obj.nodeID.join("") === ancestorID.join("")
+      ));
+    }
+    
+    
       ancestorID.pop();
     }
   }
@@ -319,8 +329,6 @@ function Node(props) {
 
           <div class="z-0 row-start-2 col-start-1">
             <div className="textSubHeader">Subject: {foundObject.subject}</div>
-            <br />
-            <div className="textSubHeader">ID: {foundObject.nodeID}</div>
 
             <p className="textSubHeader">Objective: {foundObject.objective}</p>
             <input
