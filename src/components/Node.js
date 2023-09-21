@@ -247,45 +247,18 @@ function Node(props) {
   let ancestorID = foundObject !== undefined && foundObject.hierarchy.length >= 2 ? [...foundObject.hierarchy] : [1,1];
 
   const nodeInfoHierarchyDisplay = () => {
-    if (ancestorID.length >= 2){
-    for (let i = 0; i < ancestorID.length; i++) {
-      if (ancestorID.length >=3){
+    if (displayedAncestors.length == 1){
+      displayedAncestors.pop();
+    }
+    do {
       displayedAncestors.push(props.jobs[props.SelectedJob].tree.find(
         (obj) => obj.nodeID.join("") === ancestorID.join("")
       ));
-    }
-
-    else if (ancestorID.length ==2){
-      displayedAncestors.push(props.jobs[props.SelectedJob].tree.find(
-        (obj) => obj.nodeID.join("") === ancestorID.join("")
-      ));
-    }
-    
     
       ancestorID.pop();
-    }
+  } while(ancestorID.length>= 2);
   }
-  }
-  // nodeInfoHierarchyDisplay(props.SelectedNode);
   nodeInfoHierarchyDisplay();
-
-  // function nodeInfoHierarchyDisplay(nodeID) {
-  //   ancestorID.pop();
-  //   const parent = props.jobs[props.SelectedJob].tree[ancestorID];
-  //   displayedAncestors.push(parent);
-  //   return function () {
-  //     return nodeID.slice();
-  //   };
-  // }
-  
-  // const myArray = [1, 2, 3, 4, 5];
-  // const removeLast = sliceAndRemoveLast(myArray);
-  
-  // console.log(myArray); // This will log [1, 2, 3, 4, 5], preserving the original state.
-  
-  // const newArray = removeLast();
-  // console.log(newArray); // This will log [1, 2, 3, 4], as it's the result of calling the returned function.
-  
 
   return (
     <div>
