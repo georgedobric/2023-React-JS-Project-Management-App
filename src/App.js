@@ -45,14 +45,25 @@ function App() {
   const [JobSelectStatus, setJobSelectStatus] = useState(false);
   const [NoJobSelection, setNoJobSelection] = useState(true);
   const [stepDownAfterNodeSelect, setStepDownAfterNodeSelect] = useState(false);
+  // const [clearNodeInputFields, setClearNodeInputFields] = useState(false)
+  const [clearDisplayedAncestors, setClearDisplayedAncestors] = useState(false);
+  const [newFoundObject, setNewFoundObject] = useState(Jobs[0].tree[0]);
 
   //Store the user's selected job.
   const JobSelector = (id) => {
     setSelectedJob(id);
     setJobSelectStatus(true);
     setNoJobSelection(false);
+    // setClearNodeInputFields(true);
+    setClearDisplayedAncestors(true);
+    const newObj = Jobs[SelectedJob].tree[0];
+    setNewFoundObject(newObj);
     console.log("The selected job is: ", SelectedJob);
   };
+
+  const clearDisplayedAncestorsHandler = () => {
+    setClearDisplayedAncestors(false);
+  }
 
   //Add new jobs entered by the user.
   const JobModifier = (obj) => {
@@ -269,6 +280,9 @@ function App() {
           HierarchySetter={HierarchySetter}
           stepDownAfterNodeSelect={stepDownAfterNodeSelect}
           handleStepDownAfterNodeSelect={handleStepDownAfterNodeSelect}
+          clearDisplayedAncestors={clearDisplayedAncestors}
+          clearDisplayedAncestorsHandler={clearDisplayedAncestorsHandler}
+          newFoundObject={newFoundObject}
         ></Node>
       </div>
       <div class="z-50 bg-green-300 p-3 rounded-full left-1/2 bottom-1/4 absolute border-4 border-purple-300 w-1/12 text-center text-2xl">

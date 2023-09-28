@@ -49,8 +49,8 @@ function Node(props) {
     setTimeout(() => {
       handleAddNode();
       setAddNodeClickStatus(false);
-    }, 200)
-  }
+    }, 200);
+  };
   //Add a new node to the selected job & selected hierarchy.
   const handleAddNode = () => {
     const targetHierarchy = foundObject.nodeID.slice(0, -1);
@@ -99,13 +99,13 @@ function Node(props) {
     setUserInputRisk(event.target.value);
   };
 
-  function clearInput () {
-    setUserInputObjective('');
-    setUserInputPlan('');
-    setUserInputCollaboration('');
-    setUserInputCommunication('');
-    setUserInputRisk('');
-  };
+  function clearInput() {
+    setUserInputObjective("");
+    setUserInputPlan("");
+    setUserInputCollaboration("");
+    setUserInputCommunication("");
+    setUserInputRisk("");
+  }
 
   //Update Handlers:
   const handleObjectiveUpdate = (objective) => {
@@ -205,9 +205,10 @@ function Node(props) {
   }, []);
 
   //Store the user-selected node, used for reference when adding new nodes.
-  const [foundObject, setFoundObject] = useState(
+  let [foundObject, setFoundObject] = useState(
     props.jobs[props.SelectedJob].tree[0]
   );
+  foundObject = props.newFoundObject; //Update the foundObject upon the user selecting a different Job
   useEffect(() => {
     const foundObjectSetter = props.jobs[props.SelectedJob].tree.find(
       (obj) =>
@@ -217,7 +218,8 @@ function Node(props) {
         )
     );
     setFoundObject(foundObjectSetter);
-  }, [props.SelectedNode]);
+    // props.clearDisplayedAncestorsHandler();
+  }, [props.SelectedNode]); //, props.clearDisplayedAncestors]);
 
   const updateFoundObject = () => {
     const foundObjectSetter = props.jobs[props.SelectedJob].tree.find(
@@ -242,23 +244,59 @@ function Node(props) {
 
   //display the node hierarchy in node info
   //Filter through the user-selected job, storing elements that are parents of the user-selected node, including the selected node. Used for the nodeID display.
-  const displayedAncestors = props.SelectedNode !== undefined ? [props.jobs[props.SelectedJob].tree[0]] : [props.jobs[0].tree[0]];
+  const displayedAncestors =
+    props.SelectedNode !== undefined
+      ? [props.jobs[props.SelectedJob].tree[0]]
+      : [props.jobs[0].tree[0]];
   // let ancestorID = displayedAncestors !== undefined ? displayedAncestors.nodeID : [1,1];
-  let ancestorID = foundObject !== undefined && foundObject.hierarchy.length >= 2 ? [...foundObject.hierarchy] : [1,1];
+  
+  // if (props.jobs[props.SelectedJob].tree[0].hierarchy.length == 1 && props.clearDisplayedAncestors == true) {
+  //   updateFoundObject();
+  //   props.clearDisplayedAncestorsHandler();
+  // }
+    if (props.jobs[props.SelectedJob].tree[0].hierarchy.length == 1 && props.clearDisplayedAncestors == true) {
+    
+    props.clearDisplayedAncestorsHandler();
+  }
+  let ancestorID =
+    foundObject !== undefined && foundObject.hierarchy.length >= 2
+      ? [...foundObject.hierarchy]
+      : [1,1];
+    // foundObject !== undefined && foundObject.hierarchy.length >= 2
+    //   ? [...foundObject.hierarchy]
+    //   : [1, 1];
 
   const nodeInfoHierarchyDisplay = () => {
-    if (displayedAncestors.length == 1){
-      displayedAncestors.pop();
+    if (displayedAncestors.length == 1) {
+      displayedAncestors.pop(); //Remove the 'Root' ancestor used to initialize displayedAncestors
     }
     do {
-      displayedAncestors.push(props.jobs[props.SelectedJob].tree.find(
-        (obj) => obj.nodeID.join("") === ancestorID.join("")
-      ));
-    
-      ancestorID.pop();
-  } while(ancestorID.length>= 2);
-  }
+      displayedAncestors.push(
+        props.jobs[props.SelectedJob].tree.find(
+          (obj) => obj.nodeID.join("") === ancestorID.join("")
+        )
+      ); //Push the node, with a nodeID of ancestorID's, into displayedAncestors
+
+      ancestorID.pop(); //Set the next ancestor's node ID
+    } while (ancestorID.length >= 2);
+  };
   nodeInfoHierarchyDisplay();
+
+  // if (foundObject.hierarchy.length >= 2){
+  //   nodeInfoHierarchyDisplay();
+  // }
+  // else if (foundObject.hierarchy.length == 2 && props.clearDisplayedAncestors == true) {
+  //   displayedAncestors.length=0;
+  //   setFoundObject(props.jobs[props.SelectedJob].tree[0]);
+  //   props.clearDIsplayedAncestorsHandler();
+  // }
+
+  // useEffect(() => {
+  //   if (props.clearDisplayedAncestors == true) {
+  //     updateFoundObject();
+  //   }
+  //   props.clearDisplayedAncestorsHandler();
+  // }, [props.clearDisplayedAncestors]);
 
   return (
     <div>
@@ -268,37 +306,38 @@ function Node(props) {
             Node Info
           </div>
           <div class="row-start-2 col-start-2  w-full text-right text-white text-lg p-11 font-serif font-bold">
-          <div>Selected Node Hierarchy</div>
-          
-          {foundObject.nodeID.length >= 2 && displayedAncestors.map((obj) => (
-              <motion.button
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.9 }}
-                // key={obj.id}
-                class="bg-blue-400 text-white text-center border-4 border-pink-300 rounded-full w-2/3"
-                //className="text-white text-center h-min whitespace-nowrap bg-blue-400 border-4 border-pink-300 p-3 rounded-full w-2/3 mx-auto mb-2 top-1  relative"
-                // onMouseEnter={() => {
-                //   handleMouseEnter(obj.nodeID);
-                // }}
-                // onMouseLeave={() => {
-                //   handleMouseLeave();
-                // }}
-                // onClick={() => {
-                //   handleNodeSelect(obj.nodeID);
-                // }}
-                // onWheel={() => {
-                //   handleHierarchyShift(
-                //     Preview,
-                //     ScrollingUp,
-                //     PreviewID,
-                //     ScrollingDown
-                //   );
-                // }}
-              >
-                {obj.subject}
-              </motion.button>
+            <div>Selected Node Hierarchy</div>
+
+            {foundObject.nodeID.length >= 2 &&
+              displayedAncestors.map((obj) => (
+                <motion.button
+                  whileHover={{ scale: 1.1 }}
+                  whileTap={{ scale: 0.9 }}
+                  // key={obj.id}
+                  class="bg-blue-400 text-white text-center border-4 border-pink-300 rounded-full w-2/3"
+                  //className="text-white text-center h-min whitespace-nowrap bg-blue-400 border-4 border-pink-300 p-3 rounded-full w-2/3 mx-auto mb-2 top-1  relative"
+                  // onMouseEnter={() => {
+                  //   handleMouseEnter(obj.nodeID);
+                  // }}
+                  // onMouseLeave={() => {
+                  //   handleMouseLeave();
+                  // }}
+                  // onClick={() => {
+                  //   handleNodeSelect(obj.nodeID);
+                  // }}
+                  // onWheel={() => {
+                  //   handleHierarchyShift(
+                  //     Preview,
+                  //     ScrollingUp,
+                  //     PreviewID,
+                  //     ScrollingDown
+                  //   );
+                  // }}
+                >
+                  {obj.subject}
+                </motion.button>
               ))}
-            </div>
+          </div>
 
           <div class="z-0 row-start-2 col-start-1">
             <div className="textSubHeader">Subject: {foundObject.subject}</div>
@@ -385,7 +424,11 @@ function Node(props) {
         </div>
       </div>
       <button
-        class={addNodeClickStatus ? 'bg-purple-300 z-50 p-4 w-1/5 rounded-full border-4 border-black absolute bottom-1/2 right-2 transform transition-transform duration-300 hover:scale-90' : 'bg-red-300 hover:bg-purple-300 z-50 p-4 w-1/5 rounded-full border-4 border-black absolute bottom-1/2 right-2 transform transition-transform duration-300 hover:scale-105'}
+        class={
+          addNodeClickStatus
+            ? "bg-purple-300 z-50 p-4 w-1/5 rounded-full border-4 border-black absolute bottom-1/2 right-2 transform transition-transform duration-300 hover:scale-90"
+            : "bg-red-300 hover:bg-purple-300 z-50 p-4 w-1/5 rounded-full border-4 border-black absolute bottom-1/2 right-2 transform transition-transform duration-300 hover:scale-105"
+        }
         onClick={handleAddNodeClick}
       >
         ➕
