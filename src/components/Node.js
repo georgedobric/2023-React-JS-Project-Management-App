@@ -208,7 +208,14 @@ function Node(props) {
   let [foundObject, setFoundObject] = useState(
     props.jobs[props.SelectedJob].tree[0]
   );
-  foundObject = props.newFoundObject; //Update the foundObject upon the user selecting a different Job
+
+  //latest adjustment to logic, intended to resolve job switching when viewing a child node.
+  //Appears to be an issue with props.Hierarchy being blank
+  //Manually stepping up to the root then switching jobs works fine.
+  if (props.clearDisplayedAncestors == true){
+    foundObject = props.newFoundObject; //Update the foundObject upon the user selecting a different Job
+    props.clearDisplayedAncestorsHandler();
+  }
   useEffect(() => {
     const foundObjectSetter = props.jobs[props.SelectedJob].tree.find(
       (obj) =>
