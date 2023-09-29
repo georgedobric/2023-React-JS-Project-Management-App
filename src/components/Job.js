@@ -11,6 +11,10 @@ function Job(props) {
     props.JobSelector(id);
   };
 
+  //Styling
+  const [addJobClickStatus, setAddJobClickStatus] = useState();
+
+
   //Let the user  add a new job.
   const handleAddJob = () => {
     const newJob = {
@@ -32,13 +36,53 @@ function Job(props) {
     props.JobModifier(newJob);
   };
 
+  // const handleAddJobClick = () => {
+  // setAddJobClickStatus(true);
+  //   setTimeout(() => {
+  //     handleAddJob();
+  //     setAddJobClickStatus(false);
+  //   }, 200);
+  // }
+  const addJobButtonVariants = {
+    hover: {
+      scale: 1.1,
+      backgroundColor: '#9370DB',
+      transition: {
+        duration: 0.01,
+      },
+    },
+    tap: {
+      scale: 0.9,
+      backgroundColor: '#9932CC',
+      transition: {
+        duration: 0.1,
+      },
+    },
+  };
+
   return (
     <div>
       <motion.button
-          whileHover={{ scale: 1.1, backgroundColor: "blue" }}
-          whileTap={{ scale: 0.9 }}
-          class=" bg-red-300 w-1/5 rounded-full border-4 border-black p-4 bottom-1/2 left-1/4 absolute z-10"
+          // whileHover={{ scale: 1.1 }}
+          // whileTap={{ scale: 0.9 }}
+          // class=" bg-red-300 w-1/5 rounded-full border-4 border-black p-4 bottom-1/2 left-1/4 absolute z-10"
+          // class="z-50 bg-red-300 border-4 border-black text-white text-center top-20 fixed rounded-full right-10 p-4"
+          // class=" bg-red-300 border-4 border-black text-white text-center absolute rounded-full p-4 z-10 left-1/4 w-1/5"
+          // class={
+          //   addJobClickStatus
+          //     ? "bg-purple-300 z-10 p-4 w-1/5 rounded-full border-4 border-black absolute bottom-1/2 left-1/4 transform transition-transform duration-300 hover:scale-90"
+          //     : "bg-red-300 hover:bg-purple-300 z-10 p-4 w-1/5 rounded-full border-4 border-black absolute bottom-1/2 left-1/4 transform transition-transform duration-300 hover:scale-105"
+          // }
+
+          // onClick={handleAddJobClick}
+
+          variants={addJobButtonVariants}
+          initial="rest"
+          whileHover="hover"
+          whileTap="tap"
+          className="bg-red-300 z-10 p-4 w-1/5 rounded-full border-4 border-black absolute bottom-1/2 left-1/4 transform transition-transform duration-300 hover:scale-90"
           onClick={handleAddJob}
+
         >
           ➕
         </motion.button>
@@ -49,7 +93,7 @@ function Job(props) {
         
         {props.jobs.map((obj) => (
           <motion.button
-            whileHover={{ scale: 1.5 }}
+            whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.9 }}
             class="text-white text-center h-min whitespace-nowrap bg-blue-400 border-4 border-pink-300 p-3 rounded-full w-2/3 mx-auto mb-2 top-1  relative"
             key={obj.id}
