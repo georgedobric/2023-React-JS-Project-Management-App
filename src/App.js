@@ -59,6 +59,8 @@ function App() {
     const newObj = Jobs[SelectedJob].tree[0];
     setNewFoundObject(newObj);
     console.log("The selected job is: ", SelectedJob);
+    setSelectedNode([1,1]);
+    setHierarchy([1]);
   };
 
   const clearDisplayedAncestorsHandler = () => {
