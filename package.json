@@ -3,7 +3,6 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@craco/craco": "^7.1.0",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
@@ -39,6 +38,7 @@
     ]
   },
   "devDependencies": {
+    "@craco/craco": "^7.1.0",
     "autoprefixer": "^10.4.15",
     "postcss": "^8.4.29",
     "prettier": "^3.0.2",
