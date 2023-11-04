@@ -36,6 +36,12 @@ function Job(props) {
     props.JobModifier(newJob);
   };
 
+  //Let the user  add a new job.
+  const handleEditJob = () => {
+    const newTitle = prompt("Enter a new job title:")
+    props.JobTitleModifier(newTitle);
+  };
+
   // const handleAddJobClick = () => {
   // setAddJobClickStatus(true);
   //   setTimeout(() => {
@@ -44,6 +50,23 @@ function Job(props) {
   //   }, 200);
   // }
   const addJobButtonVariants = {
+    hover: {
+      scale: 1.1,
+      backgroundColor: '#9370DB',
+      transition: {
+        duration: 0.01,
+      },
+    },
+    tap: {
+      scale: 0.9,
+      backgroundColor: '#9932CC',
+      transition: {
+        duration: 0.1,
+      },
+    },
+  };
+
+  const editJobButtonVariants = {
     hover: {
       scale: 1.1,
       backgroundColor: '#9370DB',
@@ -85,6 +108,16 @@ function Job(props) {
 
         >
           ➕
+        </motion.button>
+        <motion.button
+          variants={editJobButtonVariants}
+          initial="rest"
+          whileHover="hover"
+          whileTap="tap"
+          className="bg-red-300 z-10 p-4 w-1/4 rounded-full border-4 border-black absolute bottom-1/2 left-1/6 transform transition-transform duration-300 hover:scale-90"
+          onClick={handleEditJob}
+        >
+        Edit Selected Job Title
         </motion.button>
       <div
         class="bg-yellow-300 border-4 border-blue-300 rounded-xl fixed h-1/2 w-5/12 top-1/2 left-5 overflow-auto overflow-nowrap flex flex-row flex-wrap"

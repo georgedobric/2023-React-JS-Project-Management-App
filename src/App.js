@@ -73,6 +73,12 @@ function App() {
     setJobs(updatedJob);
   };
 
+  const JobTitleModifier = (obj) => {
+    // const updatedJob = Jobs[SelectedJob];
+    // updatedJob.title = obj;
+    Jobs[SelectedJob].title = obj;
+  }
+
   const handleStepDownAfterNodeSelect = (state) => {
     setStepDownAfterNodeSelect(state);
   };
@@ -253,6 +259,7 @@ function App() {
           JobSelectStatus={JobSelectStatus}
           NoJobSelection={NoJobSelection}
           JobModifier={JobModifier}
+          JobTitleModifier={JobTitleModifier}
         ></Job>
       </div>
 
@@ -287,9 +294,9 @@ function App() {
           newFoundObject={newFoundObject}
         ></Node>
       </div>
-      <div class="z-50 bg-green-300 p-3 rounded-full left-1/2 bottom-1/4 absolute border-4 border-purple-300 w-1/12 text-center text-2xl">
+      {/* <div class="z-50 bg-green-300 p-3 rounded-full left-1/2 bottom-1/4 absolute border-4 border-purple-300 w-1/12 text-center text-2xl">
         🖐️
-      </div>
+      </div> */}
       <div class="z-50 bg-green-400 border-4 border-black w-1/4 mt-1/2 rounded-full right-1/4 text-center absolute content-center top-1/2">
         <div class=" font-bold font-sans text-lg order-1 text-black flex relative p-1 left-1/4">
           Nodes
