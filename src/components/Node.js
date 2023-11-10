@@ -12,6 +12,7 @@ function Node(props) {
     props.jobs[props.SelectedJob].tree[0]
   );
   const [addNodeClickStatus, setAddNodeClickStatus] = useState();
+  const [dragNodeId, setDragNodeId] = useState();
 
   //Let the user preview nodes with a mouse hover.
   const handleMouseEnter = (id) => {
@@ -305,6 +306,24 @@ function Node(props) {
   //   props.clearDisplayedAncestorsHandler();
   // }, [props.clearDisplayedAncestors]);
 
+  //Drag & drop hierarchy adjustments
+
+  //Node subjected to hierarchy change
+  const hanldeNodeDrag = (id) => {
+    // props.NodeSelector(id);
+    // nodeInfoHierarchyDisplay();
+
+    console.log("holding node: " + id);
+  };
+
+  //Destination parent node for the node being dragged, adding said node to its children
+  const hanldeNodeLanding = (id) => {
+    // props.NodeSelector(id);
+    // nodeInfoHierarchyDisplay();
+
+    console.log("landing node: " + id);
+  };
+
   return (
     <div>
       <div class="h-full">
@@ -415,6 +434,12 @@ function Node(props) {
                 }}
                 onClick={() => {
                   handleNodeSelect(obj.nodeID);
+                }}
+                onMouseDown={() => {
+                  hanldeNodeDrag(obj.nodeID);
+                }}
+                onMouseUp={() => {
+                  hanldeNodeLanding(obj.nodeID);
                 }}
                 onWheel={() => {
                   handleHierarchyShift(
