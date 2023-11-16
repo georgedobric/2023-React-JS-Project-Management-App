@@ -228,6 +228,11 @@ function App() {
     setUserInput(event.target.value);
   };
 
+  //Shift the NodeID values accordingly upon a drag-and-drop action
+  const dragDropShifter = (landingID, dragID) => {
+    console.log("LANDING: " + landingID + " & DRAG " + dragID);
+  };
+
   return (
     <div>
       <div
@@ -292,6 +297,7 @@ function App() {
           clearDisplayedAncestors={clearDisplayedAncestors}
           clearDisplayedAncestorsHandler={clearDisplayedAncestorsHandler}
           newFoundObject={newFoundObject}
+          dragDropShifter={dragDropShifter}
         ></Node>
       </div>
       {/* <div class="z-50 bg-green-300 p-3 rounded-full left-1/2 bottom-1/4 absolute border-4 border-purple-300 w-1/12 text-center text-2xl">

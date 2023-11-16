@@ -310,18 +310,12 @@ function Node(props) {
 
   //Node subjected to hierarchy change
   const hanldeNodeDrag = (id) => {
-    // props.NodeSelector(id);
-    // nodeInfoHierarchyDisplay();
-
-    console.log("holding node: " + id);
+    setDragNodeId(id);
   };
 
   //Destination parent node for the node being dragged, adding said node to its children
   const hanldeNodeLanding = (id) => {
-    // props.NodeSelector(id);
-    // nodeInfoHierarchyDisplay();
-
-    console.log("landing node: " + id);
+    props.dragDropShifter(id, dragNodeId);
   };
 
   return (
