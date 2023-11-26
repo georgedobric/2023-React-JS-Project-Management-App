@@ -231,6 +231,28 @@ function App() {
   //Shift the NodeID values accordingly upon a drag-and-drop action
   const dragDropShifter = (landingID, dragID) => {
     console.log("LANDING: " + landingID + " & DRAG " + dragID);
+    console.log(Jobs.map);
+    const x = targetObject(landingID)
+    // console.log("Targ Obj testing: " + x);
+
+    console.log("x nodeID / landingID: " + x.nodeID);
+  };
+
+  const targetObject = (landingID) => {
+    // const foundObjectSetter = Jobs[SelectedJob].tree.find(
+
+    // const i = SelectedNode[0] - 1;
+    // const z = typeof SelectedNode[0] === 'number';
+    // console.log("IS 'i' A NUMBER?: " + z);
+    const foundObjectSetter = Jobs[SelectedJob].tree.find(
+      (obj) =>
+        obj.nodeID.length === landingID.length &&
+        obj.nodeID.every(
+          (nodeID, index) => nodeID === landingID[index]
+        )
+    );
+    // setFoundObject(foundObjectSetter);
+    return(foundObjectSetter);
   };
 
   return (
