@@ -242,20 +242,20 @@ function App() {
   const dragDropShifter = (landingID, dragID) => {
     console.log("LANDING: " + landingID + " & DRAG " + dragID);
     console.log(Jobs.map);
-    const x = targetObject(landingID)
+    const x = targetObject(landingID, dragID)
     // console.log("Targ Obj testing: " + x);
 
     console.log("x nodeID / landingID: " + x.nodeID);
 
   };
 
-  const targetObject = (landingID) => {
+  const targetObject = (landingID, dragID) => {
     // const foundObjectSetter = Jobs[SelectedJob].tree.find(
 
     // const i = SelectedNode[0] - 1;
     // const z = typeof SelectedNode[0] === 'number';
     // console.log("IS 'i' A NUMBER?: " + z);
-    const foundObjectSetter = Jobs[SelectedJob].tree.find(
+    const indexOfLandingNode = Jobs[SelectedJob].tree.find(
       (obj) =>
         obj.nodeID.length === landingID.length &&
         obj.nodeID.every(
@@ -263,15 +263,76 @@ function App() {
         )
     );
 
-    const tempJobs = {...Jobs};
-    const updatedJobs = Jobs[SelectedJob].tree.map(
+    console.log("THE LAND INDEX IS: " + indexOfLandingNode.nodeID);
+    console.log("THE LAND SUBJECT IS: " + indexOfLandingNode.subject);
+
+    const indexOfDraggedNode = Jobs[SelectedJob].tree.find(
       (obj) =>
-        obj.nodeID.length === landingID.length &&
+        obj.nodeID.length === dragID.length &&
         obj.nodeID.every(
-          (nodeID, index) => nodeID === landingID[index]
-        ) ? 999 : obj.nodeID
+          (nodeID, index) => nodeID === dragID[index]
+        )
     );
-    console.log("updatedJobs is: " + updatedJobs);
+
+    console.log("THE DRAG INDEX IS: " + indexOfDraggedNode.nodeID);
+    console.log("THE DRAG SUBJECT IS: " + indexOfDraggedNode.subject);
+
+    //assign the new nodeID for the dragged node
+    // const newNodeID = indexOfLandingNode.nodeID;
+    //^for the above, I need to check the LENGTH of the amount of CHILD NODES
+    //which are in the LANDING node
+
+    //lets say we drag 1,2 into 1,1
+    //so, the new hierarchy for the dragged node is = idnexOfLandingNode.nodeID
+    //so, newNodeID = [newHierarchy, indexOfLandingNode.tree.length + 1]
+
+    const newHierarchy = indexOfLandingNode.nodeID;
+    let nodePositionInTree = 0;
+    if (indexOfLandingNode.tree !== undefined) { //.hasOwnProperty('id')) {
+      nodePositionInTree = indexOfLandingNode.tree.length + 1;
+    } else {
+      nodePositionInTree = 1;
+    }
+    // const nodePositionInTree = indexOfLandingNode.tree.length + 1;
+    const newNodeID = [...newHierarchy, nodePositionInTree];
+    console.log("-----The NEW node ID issssss: " + newNodeID);
+
+    //need to also change its hierarchy
+    //Iterate this process for the children of said node, if any.
+
+    //Use the spread operator and slice functionality to duplicate
+    //Jobs array under a selected job, and alter the selected node's
+    //objective field value.
+    const updatedDraggedNodeID = [
+      ...Jobs[SelectedJob].tree.slice(0, indexOfDraggedNode),
+      {
+        ...Jobs[SelectedJob].tree[indexOfDraggedNode],
+        nodeID: indexOfLandingNode.nodeID,
+      },
+      ...Jobs[SelectedJob].tree.slice(indexOfDraggedNode + 1),
+    ];
+
+    //duplicate the Jobs array using a spread operator
+    const updatedJobs = [...Jobs];
+
+    //modify the duplicate with the updated node objective value
+    // updatedJobs[SelectedJob].tree = updatedNodeObjective;
+
+    //update JobSelectStatus
+    // setJobSelectStatus(updatedJobs);
+
+
+
+    // const tempJobs = {...Jobs};
+    // const updatedJobs = Jobs[SelectedJob].tree.map(
+    //   (obj) =>
+    //     obj.nodeID.length === landingID.length &&
+    //     obj.nodeID.every(
+    //       (nodeID, index) => nodeID === landingID[index]
+    //     ) ? 999 : obj.nodeID
+    // );
+    // console.log("updatedJobs is: " + updatedJobs);
+
     /*the above code is intended to replace the nodeID of the
     dragged node to the new nodeID, but all it does is just
     list all the nodeIDs available for each node. I need to
@@ -280,7 +341,7 @@ function App() {
     or some other approach can work too.    */
 
     // setFoundObject(foundObjectSetter);
-    return(foundObjectSetter);
+    return(indexOfLandingNode);
   };
 
   return (
