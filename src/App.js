@@ -301,16 +301,17 @@ function App() {
     //Iterate this process for the children of said node, if any.
 
     //Use the spread operator and slice functionality to duplicate
-    //Jobs array under a selected job, and alter the selected node's
-    //objective field value.
+    //Jobs array under a selected job, and alter the selected/dragged node's
+    //nodeID value.
     const updatedDraggedNodeID = [
       ...Jobs[SelectedJob].tree.slice(0, indexOfDraggedNode),
       {
         ...Jobs[SelectedJob].tree[indexOfDraggedNode],
-        nodeID: indexOfLandingNode.nodeID,
+        nodeID: newNodeID//indexOfLandingNode.nodeID,
       },
       ...Jobs[SelectedJob].tree.slice(indexOfDraggedNode + 1),
     ];
+    console.log("completed.")
 
     //duplicate the Jobs array using a spread operator
     const updatedJobs = [...Jobs];
