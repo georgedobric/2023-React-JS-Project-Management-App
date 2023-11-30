@@ -100,11 +100,16 @@ function App() {
 
   //Node input update functions, called by handlers in the Node component.
   const NodeObjectiveModifier = (event) => {
+    //store the index of the selected node, using nodeID comparisons
     const index = Jobs[SelectedJob].tree.findIndex(
       (node) =>
         node.nodeID.length === SelectedNode.length &&
         node.nodeID.every((nodeID, index) => nodeID === SelectedNode[index])
     );
+
+    //Use the spread operator and slice functionality to duplicate
+    //Jobs array under a selected job, and alter the selected node's
+    //objective field value.
     const updatedNodeObjective = [
       ...Jobs[SelectedJob].tree.slice(0, index),
       {
@@ -114,8 +119,13 @@ function App() {
       ...Jobs[SelectedJob].tree.slice(index + 1),
     ];
 
+    //duplicate the Jobs array using a spread operator
     const updatedJobs = [...Jobs];
+
+    //modify the duplicate with the updated node objective value
     updatedJobs[SelectedJob].tree = updatedNodeObjective;
+
+    //update JobSelectStatus
     setJobSelectStatus(updatedJobs);
   };
 
@@ -236,6 +246,7 @@ function App() {
     // console.log("Targ Obj testing: " + x);
 
     console.log("x nodeID / landingID: " + x.nodeID);
+
   };
 
   const targetObject = (landingID) => {
@@ -251,6 +262,23 @@ function App() {
           (nodeID, index) => nodeID === landingID[index]
         )
     );
+
+    const tempJobs = {...Jobs};
+    const updatedJobs = Jobs[SelectedJob].tree.map(
+      (obj) =>
+        obj.nodeID.length === landingID.length &&
+        obj.nodeID.every(
+          (nodeID, index) => nodeID === landingID[index]
+        ) ? 999 : obj.nodeID
+    );
+    console.log("updatedJobs is: " + updatedJobs);
+    /*the above code is intended to replace the nodeID of the
+    dragged node to the new nodeID, but all it does is just
+    list all the nodeIDs available for each node. I need to
+    leverage the dragged node's nodeID, using that to DELETE
+    the dragged node after I duplicated it, assigned a new nodeID?
+    or some other approach can work too.    */
+
     // setFoundObject(foundObjectSetter);
     return(foundObjectSetter);
   };
