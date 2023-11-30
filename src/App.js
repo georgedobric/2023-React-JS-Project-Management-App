@@ -243,18 +243,12 @@ function App() {
     console.log("LANDING: " + landingID + " & DRAG " + dragID);
     console.log(Jobs.map);
     const x = targetObject(landingID, dragID)
-    // console.log("Targ Obj testing: " + x);
-
     console.log("x nodeID / landingID: " + x.nodeID);
-
   };
 
   const targetObject = (landingID, dragID) => {
-    // const foundObjectSetter = Jobs[SelectedJob].tree.find(
 
-    // const i = SelectedNode[0] - 1;
-    // const z = typeof SelectedNode[0] === 'number';
-    // console.log("IS 'i' A NUMBER?: " + z);
+    //store the landing node object
     const objLandingNode = Jobs[SelectedJob].tree.find(
       (obj) =>
         obj.nodeID.length === landingID.length &&
@@ -263,6 +257,7 @@ function App() {
         )
     );
 
+    //store the landing node index
     const indexOfLandingNode = Jobs[SelectedJob].tree.findIndex(
       (obj) =>
         obj.nodeID.length === landingID.length &&
@@ -271,9 +266,7 @@ function App() {
         )
     );
 
-    // console.log("THE LAND INDEX IS: " + indexOfLandingNode.nodeID);
-    // console.log("THE LAND SUBJECT IS: " + indexOfLandingNode.subject);
-
+    //store the drag node object
     const objDraggedNode = Jobs[SelectedJob].tree.find(
       (obj) =>
         obj.nodeID.length === dragID.length &&
@@ -282,6 +275,7 @@ function App() {
         )
     );
 
+    //store the drag node index
     const indexOfDraggedNode = Jobs[SelectedJob].tree.findIndex(
       (obj) =>
         obj.nodeID.length === dragID.length &&
@@ -323,6 +317,7 @@ function App() {
       ...Jobs[SelectedJob].tree.slice(0, indexOfDraggedNode),
       {
         ...Jobs[SelectedJob].tree[indexOfDraggedNode],
+        hierarchy: landingID,
         nodeID: newNodeID//indexOfLandingNode.nodeID,
       },
       ...Jobs[SelectedJob].tree.slice(indexOfDraggedNode + 1),
@@ -332,32 +327,11 @@ function App() {
     //duplicate the Jobs array using a spread operator
     const updatedJobs = [...Jobs];
 
-    //modify the duplicate with the updated node objective value
-    // updatedJobs[SelectedJob].tree = updatedNodeObjective;
+    //modify the duplicate with the updated node's nodeID value
+    updatedJobs[SelectedJob].tree = updatedDraggedNodeID;
 
-    //update JobSelectStatus
-    // setJobSelectStatus(updatedJobs);
-
-
-
-    // const tempJobs = {...Jobs};
-    // const updatedJobs = Jobs[SelectedJob].tree.map(
-    //   (obj) =>
-    //     obj.nodeID.length === landingID.length &&
-    //     obj.nodeID.every(
-    //       (nodeID, index) => nodeID === landingID[index]
-    //     ) ? 999 : obj.nodeID
-    // );
-    // console.log("updatedJobs is: " + updatedJobs);
-
-    /*the above code is intended to replace the nodeID of the
-    dragged node to the new nodeID, but all it does is just
-    list all the nodeIDs available for each node. I need to
-    leverage the dragged node's nodeID, using that to DELETE
-    the dragged node after I duplicated it, assigned a new nodeID?
-    or some other approach can work too.    */
-
-    // setFoundObject(foundObjectSetter);
+    //update Jobs
+    setJobs(updatedJobs);
     return(indexOfLandingNode);
   };
 
