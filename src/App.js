@@ -255,7 +255,7 @@ function App() {
     // const i = SelectedNode[0] - 1;
     // const z = typeof SelectedNode[0] === 'number';
     // console.log("IS 'i' A NUMBER?: " + z);
-    const indexOfLandingNode = Jobs[SelectedJob].tree.find(
+    const objLandingNode = Jobs[SelectedJob].tree.find(
       (obj) =>
         obj.nodeID.length === landingID.length &&
         obj.nodeID.every(
@@ -263,10 +263,18 @@ function App() {
         )
     );
 
-    console.log("THE LAND INDEX IS: " + indexOfLandingNode.nodeID);
-    console.log("THE LAND SUBJECT IS: " + indexOfLandingNode.subject);
+    const indexOfLandingNode = Jobs[SelectedJob].tree.findIndex(
+      (obj) =>
+        obj.nodeID.length === landingID.length &&
+        obj.nodeID.every(
+          (nodeID, index) => nodeID === landingID[index]
+        )
+    );
 
-    const indexOfDraggedNode = Jobs[SelectedJob].tree.find(
+    // console.log("THE LAND INDEX IS: " + indexOfLandingNode.nodeID);
+    // console.log("THE LAND SUBJECT IS: " + indexOfLandingNode.subject);
+
+    const objDraggedNode = Jobs[SelectedJob].tree.find(
       (obj) =>
         obj.nodeID.length === dragID.length &&
         obj.nodeID.every(
@@ -274,8 +282,16 @@ function App() {
         )
     );
 
-    console.log("THE DRAG INDEX IS: " + indexOfDraggedNode.nodeID);
-    console.log("THE DRAG SUBJECT IS: " + indexOfDraggedNode.subject);
+    const indexOfDraggedNode = Jobs[SelectedJob].tree.findIndex(
+      (obj) =>
+        obj.nodeID.length === dragID.length &&
+        obj.nodeID.every(
+          (nodeID, index) => nodeID === dragID[index]
+        )
+    );
+
+    // console.log("THE DRAG INDEX IS: " + indexOfDraggedNode.nodeID);
+    // console.log("THE DRAG SUBJECT IS: " + indexOfDraggedNode.subject);
 
     //assign the new nodeID for the dragged node
     // const newNodeID = indexOfLandingNode.nodeID;
@@ -286,10 +302,10 @@ function App() {
     //so, the new hierarchy for the dragged node is = idnexOfLandingNode.nodeID
     //so, newNodeID = [newHierarchy, indexOfLandingNode.tree.length + 1]
 
-    const newHierarchy = indexOfLandingNode.nodeID;
+    const newHierarchy = landingID;
     let nodePositionInTree = 0;
-    if (indexOfLandingNode.tree !== undefined) { //.hasOwnProperty('id')) {
-      nodePositionInTree = indexOfLandingNode.tree.length + 1;
+    if (objLandingNode.tree !== undefined) { //.hasOwnProperty('id')) {
+      nodePositionInTree = objLandingNode.tree.length + 1;
     } else {
       nodePositionInTree = 1;
     }
