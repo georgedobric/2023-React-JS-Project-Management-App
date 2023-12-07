@@ -314,6 +314,8 @@ function App() {
     //all dragged nodeIDs to be changed
     const nodeIDListDrag = Object.entries(Jobs[SelectedJob].tree)
           .filter(([key, value]) => value.nodeID && value.nodeID.toString().startsWith(objDraggedNode.nodeID.toString()))
+          // .filter(([key, value]) => value.nodeID.toString().startsWith(objDraggedNode.nodeID.toString()))
+
           // .map(([key, value]) => value.nodeID); //nodeIndex(value.nodeID));
           .map(([key, value]) => ({ ...value, nodeIndex: nodeIndex(value.nodeID) })); //nodeIndex(value.nodeID));
     console.log(nodeIDListDrag);
@@ -329,13 +331,18 @@ function App() {
     // also, it should be done in a way where we store the NEW nodeID after its been adjusted, since these won't exist
 
     //for loop iteration to reassign all child node nodeIDs of the dragged node
+    let newHierarchy = landingID;
+    let dragIndex = 0;
     nodeIDListDrag.map (obj => {
 
     
-    let newHierarchy = obj.nodeID;
+    
     let nodePositionInTree = 0;
-    if (obj.tree !== undefined) {
-      nodePositionInTree = objLandingNode.tree.length + 1;
+    //looks like I need to implement the targetHierarchy logic here, then use hierarchyLength + 1
+    //hierarchyLengthCounter(targetHierarchy) first to set up the value.
+    const hierarchyLength = hierarchyLengthCounter(obj.hierarchy);
+    if (hierarchyLength !== undefined) {
+      nodePositionInTree = hierarchyLength + 1;
     } else {
       nodePositionInTree = 1;
     }
@@ -344,17 +351,19 @@ function App() {
 
     //update the nodeID for the dragged node
     const updatedDraggedNodeID = [
-      ...Jobs[SelectedJob].tree.slice(0, indexOfDraggedNode),
+      ...Jobs[SelectedJob].tree.slice(0, nodeIDListDrag[dragIndex].nodeIndex),
       {
-        ...Jobs[SelectedJob].tree[indexOfDraggedNode],
+        ...Jobs[SelectedJob].tree[nodeIDListDrag[dragIndex].nodeIndex],
         hierarchy: landingID,
         nodeID: newNodeID//indexOfLandingNode.nodeID,
       },
-      ...Jobs[SelectedJob].tree.slice(indexOfDraggedNode + 1),
+      ...Jobs[SelectedJob].tree.slice(nodeIDListDrag[dragIndex].nodeIndex + 1),
     ];
+    newHierarchy = newNodeID;
+    dragIndex++;
     console.log("completed.")
 
-    });
+    
 
     //duplicate the Jobs array using a spread operator
     const updatedJobs = [...Jobs];
@@ -364,6 +373,8 @@ function App() {
 
     //update Jobs
     setJobs(updatedJobs);
+
+    });
     return(indexOfLandingNode);
   };
 
@@ -376,7 +387,20 @@ function App() {
       )
     );
     return (index);
-    };
+  };
+
+  //Count the hierarcy length, used to assign new nodeIDs when dragging and dropping
+  const hierarchyLengthCounter = (targetHierarchy) => {
+    let count = 0;
+    Jobs[SelectedJob].tree.forEach((node) => {
+      const nodeHierarchy = node.nodeID.slice(0, -1); // Extract all but the last element
+      if (JSON.stringify(nodeHierarchy) === JSON.stringify(targetHierarchy)) {
+        count++;
+      }
+    });
+
+    return count;
+  };
 
   return (
     <div>
