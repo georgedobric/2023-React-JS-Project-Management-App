@@ -340,7 +340,8 @@ function App() {
     let nodePositionInTree = 0;
     //looks like I need to implement the targetHierarchy logic here, then use hierarchyLength + 1
     //hierarchyLengthCounter(targetHierarchy) first to set up the value.
-    const hierarchyLength = hierarchyLengthCounter(obj.hierarchy);
+    // const hierarchyLength = hierarchyLengthCounter(obj.hierarchy);
+    const hierarchyLength = hierarchyLengthCounter(nodeIDListLand[dragIndex].nodeID);
     if (hierarchyLength !== undefined) {
       nodePositionInTree = hierarchyLength + 1;
     } else {
