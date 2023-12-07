@@ -362,6 +362,7 @@ function App() {
     ];
     newHierarchy = newNodeID;
     dragIndex++;
+    nodeIDListLand[dragIndex].nodeID = newNodeID;
     console.log("completed.")
 
     
