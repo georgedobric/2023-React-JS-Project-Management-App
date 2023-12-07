@@ -135,10 +135,10 @@ function Node(props) {
     const newID = [...previewObject.nodeID, 1];
     props.HierarchySetter(previewObject.nodeID);
     const newHierarchy = [...previewObject.nodeID];
-    const isNotNullSteppDownCheck = props.jobs[props.SelectedJob].tree.filter(
+    const isNotNullStepDownCheck = props.jobs[props.SelectedJob].tree.filter(
       (obj) => obj.nodeID.join("") === newID.join("")
     );
-    if (isNotNullSteppDownCheck.length < 1) {
+    if (isNotNullStepDownCheck.length < 1) {
       const newNode = {
         subject: prompt("Enter a node subject"),
         hierarchy: newHierarchy,
