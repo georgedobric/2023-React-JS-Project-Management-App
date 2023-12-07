@@ -295,24 +295,36 @@ function App() {
     //lets say we drag 1,2 into 1,1
     //so, the new hierarchy for the dragged node is = idnexOfLandingNode.nodeID
     //so, newNodeID = [newHierarchy, indexOfLandingNode.tree.length + 1]
+    // nodeID reassignment
+    // const newHierarchy = landingID;
+    // let nodePositionInTree = 0;
+    // if (objLandingNode.tree !== undefined) {
+    //   nodePositionInTree = objLandingNode.tree.length + 1;
+    // } else {
+    //   nodePositionInTree = 1;
+    // }
+    // const newNodeID = [...newHierarchy, nodePositionInTree];
+    // console.log("-----The NEW node ID issssss: " + newNodeID);
 
+    //iterating nodeID reassignments
+    // const nodeIDList = Jobs[SelectedJob].tree.map((ID, index) => (
+
+    // ));
+    const nodeIDList = Object.entries(Jobs[SelectedJob].tree)
+          .filter(([key, value]) => value.nodeID && value.nodeID.toString().startsWith(objDraggedNode.nodeID.toString()))
+          .map(([key, value]) => value.nodeID);
+    console.log(nodeIDList);
     const newHierarchy = landingID;
     let nodePositionInTree = 0;
-    if (objLandingNode.tree !== undefined) { //.hasOwnProperty('id')) {
+    if (objLandingNode.tree !== undefined) {
       nodePositionInTree = objLandingNode.tree.length + 1;
     } else {
       nodePositionInTree = 1;
     }
-    // const nodePositionInTree = indexOfLandingNode.tree.length + 1;
     const newNodeID = [...newHierarchy, nodePositionInTree];
     console.log("-----The NEW node ID issssss: " + newNodeID);
 
-    //need to also change its hierarchy
-    //Iterate this process for the children of said node, if any.
-
-    //Use the spread operator and slice functionality to duplicate
-    //Jobs array under a selected job, and alter the selected/dragged node's
-    //nodeID value.
+    //update the nodeID for the dragged node
     const updatedDraggedNodeID = [
       ...Jobs[SelectedJob].tree.slice(0, indexOfDraggedNode),
       {
