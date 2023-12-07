@@ -310,13 +310,31 @@ function App() {
     // const nodeIDList = Jobs[SelectedJob].tree.map((ID, index) => (
 
     // ));
-    const nodeIDList = Object.entries(Jobs[SelectedJob].tree)
+
+    //all dragged nodeIDs to be changed
+    const nodeIDListDrag = Object.entries(Jobs[SelectedJob].tree)
           .filter(([key, value]) => value.nodeID && value.nodeID.toString().startsWith(objDraggedNode.nodeID.toString()))
-          .map(([key, value]) => value.nodeID);
-    console.log(nodeIDList);
-    const newHierarchy = landingID;
+          // .map(([key, value]) => value.nodeID); //nodeIndex(value.nodeID));
+          .map(([key, value]) => ({ ...value, nodeIndex: nodeIndex(value.nodeID) })); //nodeIndex(value.nodeID));
+    console.log(nodeIDListDrag);
+
+    //all landing ndoeIDs, used for ndoeID reassignment
+    const nodeIDListLand = [];
+    nodeIDListLand.push(objLandingNode);
+    nodeIDListDrag.map (obj => (
+      nodeIDListLand.push(obj))
+    );
+    console.log(nodeIDListLand);
+    // ^two problems with the above code, should be .map for all but the last element
+    // also, it should be done in a way where we store the NEW nodeID after its been adjusted, since these won't exist
+
+    //for loop iteration to reassign all child node nodeIDs of the dragged node
+    nodeIDListDrag.map (obj => {
+
+    
+    let newHierarchy = obj.nodeID;
     let nodePositionInTree = 0;
-    if (objLandingNode.tree !== undefined) {
+    if (obj.tree !== undefined) {
       nodePositionInTree = objLandingNode.tree.length + 1;
     } else {
       nodePositionInTree = 1;
@@ -336,6 +354,8 @@ function App() {
     ];
     console.log("completed.")
 
+    });
+
     //duplicate the Jobs array using a spread operator
     const updatedJobs = [...Jobs];
 
@@ -346,6 +366,17 @@ function App() {
     setJobs(updatedJobs);
     return(indexOfLandingNode);
   };
+
+  const nodeIndex = (ID) => {
+    const index = Jobs[SelectedJob].tree.findIndex(
+    (obj) =>
+      obj.nodeID.length === ID.length &&
+      obj.nodeID.every(
+        (nodeID, index) => nodeID === ID[index]
+      )
+    );
+    return (index);
+    };
 
   return (
     <div>
