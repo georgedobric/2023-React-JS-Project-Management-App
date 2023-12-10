@@ -320,7 +320,7 @@ function App() {
           .map(([key, value]) => ({ ...value, nodeIndex: nodeIndex(value.nodeID) })); //nodeIndex(value.nodeID));
     console.log(nodeIDListDrag);
 
-    //all landing ndoeIDs, used for ndoeID reassignment
+    //all landing ndoeIDs, used for nodeID reassignment
     const nodeIDListLand = [];
     nodeIDListLand.push(objLandingNode);
     nodeIDListDrag.map (obj => (
@@ -333,6 +333,7 @@ function App() {
     //for loop iteration to reassign all child node nodeIDs of the dragged node
     let newHierarchy = landingID;
     let dragIndex = 0;
+    let firstNodeID = []; 
     nodeIDListDrag.map (obj => {
 
     
@@ -348,21 +349,48 @@ function App() {
       nodePositionInTree = 1;
     }
     const newNodeID = [...newHierarchy, nodePositionInTree];
+    
+    if (firstNodeID.length < 1)
+    firstNodeID = [...newHierarchy, nodePositionInTree];
     console.log("-----The NEW node ID issssss: " + newNodeID);
 
     //update the nodeID for the dragged node
-    const updatedDraggedNodeID = [
+    let updatedDraggedNodeID = [];
+    if (firstNodeID.length == nodeIDListLand[dragIndex].nodeID.length + 1) {
+      updatedDraggedNodeID = [
+        ...Jobs[SelectedJob].tree.slice(0, nodeIDListDrag[dragIndex].nodeIndex),
+        {
+          ...Jobs[SelectedJob].tree[nodeIDListDrag[dragIndex].nodeIndex],
+          hierarchy: newNodeID.slice(0,newNodeID.length -1),//landingID,
+          nodeID: newNodeID//indexOfLandingNode.nodeID,
+          // hierarchy: firstNodeID.concat(nodeIDListLand[dragIndex].nodeID.slice(2, nodeIDListLand[dragIndex].nodeID.length - 1)),
+          // nodeID: firstNodeID.concat(nodeIDListLand[dragIndex].nodeID.slice(2, nodeIDListLand[dragIndex].nodeID.length))
+        },
+        ...Jobs[SelectedJob].tree.slice(nodeIDListDrag[dragIndex].nodeIndex + 1),
+      ];
+  }
+  else {
+    updatedDraggedNodeID = [
       ...Jobs[SelectedJob].tree.slice(0, nodeIDListDrag[dragIndex].nodeIndex),
       {
         ...Jobs[SelectedJob].tree[nodeIDListDrag[dragIndex].nodeIndex],
-        hierarchy: newNodeID.slice(0,newNodeID.length -1),//landingID,
-        nodeID: newNodeID//indexOfLandingNode.nodeID,
+        // hierarchy: newNodeID.slice(0,newNodeID.length -1),//landingID,
+        // nodeID: newNodeID//indexOfLandingNode.nodeID,
+        hierarchy: firstNodeID.concat(nodeIDListLand[dragIndex + 1].nodeID.slice(2, nodeIDListLand[dragIndex + 1].nodeID.length - 1)),
+        nodeID: firstNodeID.concat(nodeIDListLand[dragIndex + 1].nodeID.slice(2, nodeIDListLand[dragIndex + 1].nodeID.length))
       },
       ...Jobs[SelectedJob].tree.slice(nodeIDListDrag[dragIndex].nodeIndex + 1),
     ];
+  }
     newHierarchy = newNodeID;
     dragIndex++;
     nodeIDListLand[dragIndex].nodeID = newNodeID;
+    //check if the next node being reassigned will go in the same hierarchy, or a new one
+    // if (nodeIDListLand[dragIndex].nodeID.length == nodeIDListLand[dragIndex + 1].nodeID.length + 1)
+    // dragIndex--;
+
+    //^the logic above is faulty and would be inconsistent if it worked.
+    
     console.log("completed.")
 
     
