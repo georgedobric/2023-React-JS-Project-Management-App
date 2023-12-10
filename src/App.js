@@ -355,7 +355,7 @@ function App() {
       ...Jobs[SelectedJob].tree.slice(0, nodeIDListDrag[dragIndex].nodeIndex),
       {
         ...Jobs[SelectedJob].tree[nodeIDListDrag[dragIndex].nodeIndex],
-        hierarchy: landingID,
+        hierarchy: newNodeID.slice(0,newNodeID.length -1),//landingID,
         nodeID: newNodeID//indexOfLandingNode.nodeID,
       },
       ...Jobs[SelectedJob].tree.slice(nodeIDListDrag[dragIndex].nodeIndex + 1),
