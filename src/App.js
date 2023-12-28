@@ -242,8 +242,10 @@ function App() {
   const dragDropShifter = (landingID, dragID) => {
     console.log("LANDING: " + landingID + " & DRAG " + dragID);
     console.log(Jobs.map);
-    const x = targetObject(landingID, dragID)
-    console.log("x nodeID / landingID: " + x.nodeID);
+    if (landingID !== dragID){
+      const x = targetObject(landingID, dragID)
+      console.log("x nodeID / landingID: " + x.nodeID);
+    }
   };
 
   const targetObject = (landingID, dragID) => {
