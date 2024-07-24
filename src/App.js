@@ -437,14 +437,14 @@ function App() {
   return (
     <div>
       <div
-        class="fixed mx-auto w-1/4  bg-purple-400 border-4 border-black z-50 text-center text-black rounded-full top-1"
+        class="fixed mx-auto w-1/16  bg-purple-400 border-4 border-black z-40 text-center text-black rounded-full top-1"
         onMouseEnter={() => infoPreviewHandler(true)}
         onMouseLeave={() => infoPreviewHandler(false)}
       >
-        Project Management Tool - hover here for info
+        🤔
       </div>
       {InfoPreviewStatus && (
-        <div class="fixed z-50 text-yellow-200 text-center rounded-lg w-1/4 bg-gray-500 bg-transparent left-1/4 animate-pulse">
+        <div class="text-sm ml-10 fixed z-auto text-yellow-200 text-center rounded-lg w-1/4 bg-gray-500 bg-transparent left-1/6 animate-pulse">
           To enter a node, hover your cursor over it and scroll up. To exit a
           node, hover your cursor over any node and scroll down.
         </div>
@@ -469,7 +469,7 @@ function App() {
         ></Job>
       </div>
 
-      <div class="z-50 bg-green-400 border-4 border-black w-1/4 left-1/4 rounded-full absolute top-1/2">
+      <div class="z-50 bg-green-400 border-4 border-black w-1/16 left-1/3 rounded-full absolute top-1/2">
         <div class="font-bold font-sans text-lg order-1 text-center text-black p-1 ">
           Jobs
         </div>
@@ -504,8 +504,8 @@ function App() {
       {/* <div class="z-50 bg-green-300 p-3 rounded-full left-1/2 bottom-1/4 absolute border-4 border-purple-300 w-1/12 text-center text-2xl">
         🖐️
       </div> */}
-      <div class="z-50 bg-green-400 border-4 border-black w-1/4 mt-1/2 rounded-full right-1/4 text-center absolute content-center top-1/2">
-        <div class=" font-bold font-sans text-lg order-1 text-black flex relative p-1 left-1/4">
+      <div class="z-50 bg-green-400 border-4 border-black w-1/16 mt-1/2 rounded-full right-1/3 text-right absolute content-center top-1/2">
+        <div class="font-bold font-sans text-lg order-1 text-center text-black p-1 ">
           Nodes
         </div>
       </div>

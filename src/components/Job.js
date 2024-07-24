@@ -51,7 +51,7 @@ function Job(props) {
   // }
   const addJobButtonVariants = {
     hover: {
-      scale: 1.1,
+      scale: 1.3,
       backgroundColor: '#9370DB',
       transition: {
         duration: 0.01,
@@ -103,7 +103,7 @@ function Job(props) {
           initial="rest"
           whileHover="hover"
           whileTap="tap"
-          className="bg-red-300 z-10 p-4 w-1/5 rounded-full border-4 border-black absolute bottom-1/2 left-1/4 transform transition-transform duration-300 hover:scale-90"
+          className="bg-red-300 z-10 p-2 w-1/16 rounded-full border-4 border-black absolute bottom-1/2 left-1/3 flex items-center transform transition-transform duration-300 hover:scale-90"
           onClick={handleAddJob}
 
         >
@@ -114,7 +114,7 @@ function Job(props) {
           initial="rest"
           whileHover="hover"
           whileTap="tap"
-          className="bg-red-300 z-10 p-4 w-1/4 rounded-full border-4 border-black absolute bottom-1/2 left-1/6 transform transition-transform duration-300 hover:scale-90"
+          className="bg-red-300 z-10 p-4 w-1/4 rounded-full border-4 border-black absolute bottom-1/2 left-1/6 flex items-center justify-center transform transition-transform duration-300 hover:scale-90"
           onClick={handleEditJob}
         >
         Edit Selected Job Title
@@ -128,7 +128,7 @@ function Job(props) {
           <motion.button
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.9 }}
-            class="text-white text-center h-min whitespace-nowrap bg-blue-400 border-4 border-pink-300 p-3 rounded-full w-2/3 mx-auto mb-2 top-1  relative"
+            class="text-white text-center h-min whitespace-nowrap bg-blue-400 border-4 border-pink-300 p-2 rounded-full w-2/3 mx-auto mb-2 top-1  relative"
             key={obj.id}
             onClick={() => {
               handleJobSelect(obj.id - 1);

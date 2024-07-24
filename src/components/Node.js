@@ -318,6 +318,23 @@ function Node(props) {
     props.dragDropShifter(id, dragNodeId);
   };
 
+  const addNodeButtonVariants = {
+    hover: {
+      scale: 1.3,
+      backgroundColor: '#9370DB',
+      transition: {
+        duration: 0.01,
+      },
+    },
+    tap: {
+      scale: 0.9,
+      backgroundColor: '#9932CC',
+      transition: {
+        duration: 0.1,
+      },
+    },
+  };
+
   return (
     <div>
       <div class="h-full">
@@ -419,7 +436,7 @@ function Node(props) {
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.9 }}
                 key={obj.id}
-                className="text-white text-center h-min whitespace-nowrap bg-blue-400 border-4 border-pink-300 p-3 rounded-full w-2/3 mx-auto mb-2 top-1  relative"
+                className="text-white text-center h-min whitespace-nowrap bg-blue-400 border-4 border-pink-300 p-2 rounded-full w-2/3 mx-auto mb-2 top-1  relative"
                 onMouseEnter={() => {
                   handleMouseEnter(obj.nodeID);
                 }}
@@ -449,20 +466,26 @@ function Node(props) {
             ))}
         </div>
       </div>
-      <button
-        class={
-          addNodeClickStatus
-            ? "bg-purple-300 z-50 p-4 w-1/5 rounded-full border-4 border-black absolute bottom-1/2 right-2 transform transition-transform duration-300 hover:scale-90"
-            : "bg-red-300 hover:bg-purple-300 z-50 p-4 w-1/5 rounded-full border-4 border-black absolute bottom-1/2 right-2 transform transition-transform duration-300 hover:scale-105"
-        }
+      <motion.button
+        // class={
+        //   addNodeClickStatus
+        //     ? "bg-purple-300 z-50 p-4 w-1/16 rounded-full border-4 border-black absolute bottom-1/2 right-2 transform transition-transform duration-300 hover:scale-90"
+        //     : "bg-red-300 hover:bg-purple-300 z-50 p-2 w-1/16 rounded-full border-4 border-black absolute bottom-1/2 right-2 flex items-center transform transition-transform duration-300 hover:scale-125"
+        // }
+        variants={addNodeButtonVariants}
+          initial="rest"
+          whileHover="hover"
+          whileTap="tap"
+          className="bg-red-300 z-50 p-2 w-1/16 rounded-full border-4 border-black absolute bottom-1/2 right-2 flex items-center transform transition-transform duration-300 hover:scale-125"
+          
         onClick={handleAddNodeClick}
       >
         ➕
-      </button>
+      </motion.button>
       <motion.button
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.9 }}
-        class="z-50 bg-red-300 border-4 border-black text-white text-center top-20 fixed rounded-full right-10 p-4"
+        class="z-50 bg-red-300 border-4 border-black text-white text-center top-20 fixed rounded-full right-10 p-2"
         onClick={() => {
           handleObjectiveUpdate(userInputObjective);
           handlePlanUpdate(userInputPlan);
@@ -476,7 +499,7 @@ function Node(props) {
       </motion.button>
 
       {Preview && (
-        <div class="z-50 fixed bg-green-300 border-4 border-blue-300 rounded-full top-2/3 right-80">
+        <div class="z-50 fixed bg-green-300 border-4 border-blue-300 rounded-full top-2/3 right-1/3">
           {previewObject.subject}'s objective: {previewObject.objective}
         </div>
       )}
